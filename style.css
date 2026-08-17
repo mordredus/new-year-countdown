@@ -1,0 +1,795 @@
+/* =====================================================
+   BASE
+   ===================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --red: #d71920;
+    --dark-red: #8f1015;
+    --white: #ffffff;
+    --black: #080808;
+    --gray: #b9b9b9;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color: var(--white);
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(215,25,32,.22),
+            transparent 45%
+        ),
+        linear-gradient(
+            145deg,
+            #080808,
+            #150405 50%,
+            #080808
+        );
+
+    transition:
+        background 2s ease;
+}
+
+
+/* =====================================================
+   CHRISTMAS MODE
+   ===================================================== */
+
+body.christmas-mode {
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(215,25,32,.55),
+            transparent 40%
+        ),
+        linear-gradient(
+            145deg,
+            #090909,
+            #650c11 50%,
+            #090909
+        );
+}
+
+
+/* =====================================================
+   BER MONTHS SECTION
+   ===================================================== */
+
+.ber-section {
+    max-height: 300px;
+    opacity: 1;
+    overflow: hidden;
+
+    transform: translateY(0);
+
+    transition:
+        max-height 1s ease,
+        opacity .7s ease,
+        transform .7s ease,
+        margin .7s ease;
+}
+
+body.ber-complete .ber-section {
+    max-height: 0;
+    opacity: 0;
+
+    transform:
+        translateY(-20px);
+
+    margin: 0;
+}
+
+
+/* =====================================================
+   SNOW
+   ===================================================== */
+
+.snow-container {
+    position: fixed;
+    inset: 0;
+
+    z-index: 1;
+
+    pointer-events: none;
+
+    overflow: hidden;
+}
+
+.snowflake {
+    position: absolute;
+    top: -30px;
+
+    color: white;
+    opacity: 0;
+
+    animation:
+        snowfall linear infinite;
+}
+
+@keyframes snowfall {
+
+    0% {
+        transform:
+            translateY(-30px)
+            rotate(0deg);
+
+        opacity: 0;
+    }
+
+    10% {
+        opacity: .8;
+    }
+
+    90% {
+        opacity: .8;
+    }
+
+    100% {
+        transform:
+            translateY(110vh)
+            rotate(360deg);
+
+        opacity: 0;
+    }
+}
+
+
+/* =====================================================
+   CHRISTMAS LIGHTS
+   ===================================================== */
+
+.lights {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 20;
+
+    height: 35px;
+
+    display: flex;
+
+    justify-content: space-around;
+    align-items: center;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    transform:
+        translateY(-40px);
+
+    transition:
+        opacity 1s ease,
+        transform 1s ease;
+}
+
+.christmas-mode .lights {
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
+
+.bulb {
+    width: 13px;
+    height: 19px;
+
+    border-radius:
+        50% 50% 45% 45%;
+
+    background:
+        var(--red);
+
+    box-shadow:
+        0 0 12px currentColor;
+
+    animation:
+        bulbGlow 1.2s
+        ease-in-out
+        infinite alternate;
+}
+
+.bulb:nth-child(even) {
+    background: white;
+    color: white;
+
+    animation-delay: .3s;
+}
+
+.bulb:nth-child(3n) {
+    background: #d71920;
+    color: #d71920;
+
+    animation-delay: .6s;
+}
+
+@keyframes bulbGlow {
+
+    from {
+        filter:
+            brightness(.7);
+    }
+
+    to {
+        filter:
+            brightness(1.5);
+    }
+}
+
+
+/* =====================================================
+   MAIN WRAPPER
+   ===================================================== */
+
+.wrapper {
+    position: relative;
+
+    z-index: 10;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 70px 18px;
+}
+
+
+/* =====================================================
+   CARD
+   ===================================================== */
+
+.card {
+    width: min(920px, 100%);
+
+    padding: 40px;
+
+    text-align: center;
+
+    background:
+        rgba(8,8,8,.88);
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    border-radius: 30px;
+
+    box-shadow:
+        0 30px 100px
+        rgba(0,0,0,.65);
+
+    backdrop-filter:
+        blur(15px);
+}
+
+
+/* =====================================================
+   BER TIMER
+   ===================================================== */
+
+.ber-title {
+    font-size:
+        clamp(13px,2vw,17px);
+
+    font-weight: 700;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+
+    margin-bottom: 15px;
+}
+
+.ber-timer {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap: 8px;
+
+    max-width: 700px;
+
+    margin: 0 auto;
+}
+
+.ber-unit {
+    padding: 10px 5px;
+
+    background:
+        rgba(215,25,32,.12);
+
+    border:
+        1px solid
+        rgba(215,25,32,.35);
+
+    border-radius: 12px;
+}
+
+.ber-number {
+    display: block;
+
+    color: white;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size:
+        clamp(18px,4vw,30px);
+
+    font-weight: 700;
+
+    font-variant-numeric:
+        tabular-nums;
+}
+
+.ber-label {
+    display: block;
+
+    margin-top: 5px;
+
+    color: #ff5a5f;
+
+    font-size: 8px;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+}
+
+
+/* =====================================================
+   YEAR
+   ===================================================== */
+
+.year {
+    margin-top: 30px;
+
+    font-size:
+        clamp(75px,17vw,160px);
+
+    font-weight: 900;
+
+    line-height: .85;
+
+    letter-spacing: -8px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #ffffff 48%,
+            #d71920
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+}
+
+
+/* =====================================================
+   TITLE
+   ===================================================== */
+
+.title {
+    margin-top: 25px;
+
+    font-size:
+        clamp(27px,5vw,50px);
+
+    font-weight: 800;
+
+    letter-spacing: 5px;
+
+    text-transform: uppercase;
+}
+
+.subtitle {
+    margin-top: 10px;
+
+    color: var(--gray);
+
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   MAIN COUNTDOWN
+   ===================================================== */
+
+.countdown {
+    width: 100%;
+
+    max-width: 760px;
+
+    margin:
+        38px auto 0;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4,minmax(0,1fr));
+
+    gap: 14px;
+
+    justify-content: center;
+}
+
+.box {
+    width: 100%;
+    min-width: 0;
+
+    padding: 22px 8px;
+
+    background:
+        rgba(255,255,255,.04);
+
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+
+    border-radius: 18px;
+
+    transition:
+        transform .2s ease,
+        background .2s ease;
+}
+
+.box:hover {
+    transform:
+        translateY(-4px);
+
+    background:
+        rgba(215,25,32,.08);
+}
+
+.number {
+    display: block;
+
+    font-size:
+        clamp(30px,7vw,60px);
+
+    font-weight: 800;
+
+    font-variant-numeric:
+        tabular-nums;
+
+    text-align: center;
+}
+
+.label {
+    display: block;
+
+    margin-top: 7px;
+
+    color: #888888;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+
+    text-align: center;
+}
+
+
+/* =====================================================
+   REMINDER
+   ===================================================== */
+
+.info {
+    margin-top: 30px;
+
+    padding: 17px 20px;
+
+    background:
+        rgba(215,25,32,.07);
+
+    border-left:
+        4px solid
+        var(--red);
+
+    border-radius: 8px;
+
+    color: #c7c7c7;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+.info strong {
+    color: white;
+}
+
+
+/* =====================================================
+   TIMEZONE
+   ===================================================== */
+
+.timezone {
+    margin-top: 17px;
+
+    color: #777777;
+
+    font-size: 11px;
+
+    letter-spacing: 1px;
+}
+
+
+/* =====================================================
+   MUSIC BUTTON
+   ===================================================== */
+
+.music-button {
+    margin-top: 20px;
+
+    padding: 10px 18px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.2);
+
+    border-radius: 999px;
+
+    background:
+        rgba(255,255,255,.06);
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 12px;
+
+    transition:
+        background .2s ease,
+        transform .2s ease;
+}
+
+.music-button:hover {
+    background:
+        rgba(215,25,32,.35);
+
+    transform:
+        translateY(-2px);
+}
+
+
+/* =====================================================
+   CHRISTMAS POPUP
+   ===================================================== */
+
+.christmas-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    background:
+        rgba(0,0,0,.82);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity 1s ease,
+        visibility 1s ease;
+}
+
+.christmas-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.christmas-box {
+    width:
+        min(800px,95%);
+
+    padding:
+        50px 30px;
+
+    text-align:
+        center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #fff8f8
+        );
+
+    color:
+        #080808;
+
+    border:
+        7px solid
+        var(--red);
+
+    border-radius:
+        28px;
+
+    box-shadow:
+        0 0 0 8px
+        rgba(255,255,255,.8),
+
+        0 30px 100px
+        rgba(0,0,0,.8);
+
+    transform:
+        scale(.5)
+        rotate(-3deg);
+
+    opacity: 0;
+}
+
+.christmas-overlay.active
+.christmas-box {
+    animation:
+        christmasPop
+        1.2s
+        cubic-bezier(.17,.89,.32,1.28)
+        forwards;
+}
+
+@keyframes christmasPop {
+
+    0% {
+        transform:
+            scale(.5)
+            rotate(-3deg);
+
+        opacity: 0;
+    }
+
+    60% {
+        transform:
+            scale(1.08)
+            rotate(1deg);
+
+        opacity: 1;
+    }
+
+    100% {
+        transform:
+            scale(1)
+            rotate(0);
+
+        opacity: 1;
+    }
+}
+
+.christmas-icon {
+    font-size:
+        clamp(50px,10vw,100px);
+
+    margin-bottom: 15px;
+}
+
+.christmas-heading {
+    font-size:
+        clamp(34px,8vw,75px);
+
+    font-weight: 1000;
+
+    color:
+        var(--red);
+}
+
+.christmas-message {
+    margin-top: 15px;
+
+    font-size:
+        clamp(15px,3vw,21px);
+
+    font-weight: 600;
+}
+
+.christmas-small {
+    margin-top: 15px;
+
+    color: #555555;
+
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   CORNER DECORATIONS
+   ===================================================== */
+
+.christmas-corner {
+    position: fixed;
+
+    z-index: 90;
+
+    font-size:
+        clamp(45px,7vw,80px);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 1s ease;
+}
+
+.christmas-mode
+.christmas-corner {
+    opacity: 1;
+}
+
+.corner-left {
+    bottom: 10px;
+    left: 10px;
+}
+
+.corner-right {
+    bottom: 10px;
+    right: 10px;
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width:600px) {
+
+    .card {
+        padding: 32px 12px;
+    }
+
+    .ber-timer {
+        gap: 5px;
+    }
+
+    .ber-unit {
+        padding: 9px 3px;
+    }
+
+    .countdown {
+        gap: 6px;
+    }
+
+    .box {
+        padding: 18px 4px;
+    }
+
+    .title {
+        letter-spacing: 3px;
+    }
+}
