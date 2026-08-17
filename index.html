@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Year 2027 Countdown</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Christmas lights -->
+    <div class="lights">
+        <div class="bulb"></div>
+        <div class="bulb"></div>
+        <div class="bulb"></div>
+        <div class="bulb"></div>
+        <div class="bulb"></div>
+        <div class="bulb"></div>
+        <div class="bulb"></div>
+        <div class="bulb"></div>
+        <div class="bulb"></div>
+        <div class="bulb"></div>
+        <div class="bulb"></div>
+        <div class="bulb"></div>
+    </div>
+
+    <!-- Snow -->
+    <div
+        class="snow-container"
+        id="snowContainer">
+    </div>
+
+
+    <div class="wrapper">
+
+        <main class="card">
+
+            <!-- BER MONTHS TIMER -->
+            <div
+                class="ber-section"
+                id="berSection">
+
+                <div class="ber-title">
+                    Time until Ber Months!
+                </div>
+
+                <div class="ber-timer">
+
+                    <div class="ber-unit">
+                        <span
+                            class="ber-number"
+                            id="berDays">
+                            00
+                        </span>
+
+                        <span class="ber-label">
+                            Days
+                        </span>
+                    </div>
+
+
+                    <div class="ber-unit">
+                        <span
+                            class="ber-number"
+                            id="berHours">
+                            00
+                        </span>
+
+                        <span class="ber-label">
+                            Hours
+                        </span>
+                    </div>
+
+
+                    <div class="ber-unit">
+                        <span
+                            class="ber-number"
+                            id="berMinutes">
+                            00
+                        </span>
+
+                        <span class="ber-label">
+                            Minutes
+                        </span>
+                    </div>
+
+
+                    <div class="ber-unit">
+                        <span
+                            class="ber-number"
+                            id="berSeconds">
+                            00
+                        </span>
+
+                        <span class="ber-label">
+                            Seconds
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- MAIN YEAR -->
+            <div class="year">
+                2027
+            </div>
+
+
+            <h1 class="title">
+                New Year
+            </h1>
+
+
+            <p class="subtitle">
+                Countdown to January 1, 2027
+            </p>
+
+
+            <!-- MAIN COUNTDOWN -->
+            <section class="countdown">
+
+                <div class="box">
+                    <span
+                        class="number"
+                        id="days">
+                        00
+                    </span>
+
+                    <span class="label">
+                        Days
+                    </span>
+                </div>
+
+
+                <div class="box">
+                    <span
+                        class="number"
+                        id="hours">
+                        00
+                    </span>
+
+                    <span class="label">
+                        Hours
+                    </span>
+                </div>
+
+
+                <div class="box">
+                    <span
+                        class="number"
+                        id="minutes">
+                        00
+                    </span>
+
+                    <span class="label">
+                        Minutes
+                    </span>
+                </div>
+
+
+                <div class="box">
+                    <span
+                        class="number"
+                        id="seconds">
+                        00
+                    </span>
+
+                    <span class="label">
+                        Seconds
+                    </span>
+                </div>
+
+            </section>
+
+
+            <!-- REMINDER -->
+            <div
+                class="info"
+                id="reminder">
+
+                <strong>
+                    BER MONTHS TARGET
+                </strong>
+
+                <br>
+
+                September 1, 2026 —
+                12:00:00 AM
+
+                <br>
+
+                Christmas mode will activate
+                automatically at the exact local time.
+
+            </div>
+
+
+            <!-- TIMEZONE -->
+            <div
+                class="timezone"
+                id="timezone">
+
+                Detecting local timezone...
+
+            </div>
+
+
+            <!-- MUSIC -->
+            <button
+                class="music-button"
+                id="musicButton">
+
+                Enable Christmas Music
+
+            </button>
+
+        </main>
+
+    </div>
+
+
+    <!-- CHRISTMAS DECORATIONS -->
+
+    <div class="christmas-corner corner-left">
+        🎄
+    </div>
+
+    <div class="christmas-corner corner-right">
+        🎅
+    </div>
+
+
+    <!-- CHRISTMAS POPUP -->
+
+    <div
+        class="christmas-overlay"
+        id="christmasOverlay">
+
+        <div class="christmas-box">
+
+            <div class="christmas-icon">
+                🎄🎅🎁
+            </div>
+
+            <div class="christmas-heading">
+                BER MONTHS!
+            </div>
+
+            <div class="christmas-message">
+
+                IT'S SEPTEMBER 1ST!
+
+                <br>
+
+                CHRISTMAS SEASON HAS
+                OFFICIALLY BEGUN.
+
+            </div>
+
+            <div class="christmas-small">
+
+                Let the Christmas countdown begin.
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
