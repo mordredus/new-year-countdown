@@ -1,50 +1,98 @@
-/* =========================================================
+/* =====================================================
    CONFIGURATION
-   ========================================================= */
+   ===================================================== */
 
 /*
-    REAL TARGET:
+   PRODUCTION MODE
 
-    September 1, 2026
-    12:00:00 AM
+   Ber Months begins:
 
-    The Date constructor uses the device's LOCAL timezone.
+   September 1, 2026
+   12:00:00 AM
+
+   The date is interpreted in the visitor's
+   LOCAL DEVICE TIMEZONE.
+
+   Example:
+
+   Philippines:
+   September 1, 2026 12:00 AM PHT
+
+   Japan:
+   September 1, 2026 12:00 AM JST
+
+   United States:
+   September 1, 2026 12:00 AM
+   in the visitor's local timezone.
 */
 
-const berTarget = new Date(
-    2026,
-    8,
-    1,
-    0,
-    0,
-    0,
-    0
-);
+const USE_TEST_TIME = false;
 
 
-/*
-    New Year target:
+/* =====================================================
+   BER MONTHS TARGET
+   ===================================================== */
 
-    January 1, 2027
-    12:00:00 AM
-
-    Also based on the device's LOCAL timezone.
-*/
-
-const newYearTarget = new Date(
-    2027,
-    0,
-    1,
-    0,
-    0,
-    0,
-    0
-);
+let berTarget;
 
 
-/* =========================================================
+if (USE_TEST_TIME) {
+
+    /*
+       Testing only.
+    */
+
+    berTarget = new Date();
+
+    berTarget.setHours(
+        23,
+        46,
+        20,
+        0
+    );
+
+} else {
+
+    /*
+       September 1, 2026
+       12:00:00 AM
+
+       JavaScript's Date constructor
+       uses the user's local timezone
+       when no timezone is specified.
+    */
+
+    berTarget = new Date(
+        2026,
+        8,
+        1,
+        0,
+        0,
+        0,
+        0
+    );
+}
+
+
+/* =====================================================
+   NEW YEAR TARGET
+   ===================================================== */
+
+const newYearTarget =
+    new Date(
+        2027,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+    );
+
+
+/* =====================================================
    STORAGE
-   ========================================================= */
+   ===================================================== */
 
 const transitionKey =
     "newYear2027_berComplete_v5";
@@ -53,9 +101,9 @@ const transitionTimeKey =
     "newYear2027_transitionTime_v5";
 
 
-/* =========================================================
+/* =====================================================
    ELEMENTS
-   ========================================================= */
+   ===================================================== */
 
 const berDays =
     document.getElementById("berDays");
@@ -90,19 +138,15 @@ const timezone =
     document.getElementById("timezone");
 
 const overlay =
-    document.getElementById(
-        "christmasOverlay"
-    );
+    document.getElementById("christmasOverlay");
 
 const musicButton =
-    document.getElementById(
-        "musicButton"
-    );
+    document.getElementById("musicButton");
 
 
-/* =========================================================
+/* =====================================================
    TIMEZONE
-   ========================================================= */
+   ===================================================== */
 
 const detectedTimezone =
     Intl.DateTimeFormat()
@@ -114,9 +158,9 @@ timezone.textContent =
     detectedTimezone;
 
 
-/* =========================================================
+/* =====================================================
    STATE
-   ========================================================= */
+   ===================================================== */
 
 let christmasStarted =
     localStorage.getItem(
@@ -132,9 +176,9 @@ let transitionTimestamp =
     ) || 0;
 
 
-/* =========================================================
-   REMINDERS
-   ========================================================= */
+/* =====================================================
+   BER REMINDER
+   ===================================================== */
 
 function showBerReminder() {
 
@@ -156,6 +200,10 @@ function showBerReminder() {
     `;
 }
 
+
+/* =====================================================
+   NEW YEAR REMINDER
+   ===================================================== */
 
 function showNewYearReminder() {
 
@@ -179,9 +227,9 @@ function showNewYearReminder() {
 }
 
 
-/* =========================================================
+/* =====================================================
    RESTORE COMPLETED STATE
-   ========================================================= */
+   ===================================================== */
 
 function restoreCompletedState() {
 
@@ -233,13 +281,15 @@ function restoreCompletedState() {
 
 
 if (christmasStarted) {
+
     restoreCompletedState();
+
 }
 
 
-/* =========================================================
+/* =====================================================
    BER MONTHS COMPLETION
-   ========================================================= */
+   ===================================================== */
 
 function completeBerMonths() {
 
@@ -248,7 +298,8 @@ function completeBerMonths() {
     }
 
 
-    christmasStarted = true;
+    christmasStarted =
+        true;
 
 
     transitionTimestamp =
@@ -260,6 +311,7 @@ function completeBerMonths() {
         "true"
     );
 
+
     localStorage.setItem(
         transitionTimeKey,
         String(
@@ -268,19 +320,26 @@ function completeBerMonths() {
     );
 
 
-    /* Remove Ber Months timer */
+    /*
+       Remove Ber Months timer.
+    */
 
     document.body.classList.add(
         "ber-complete"
     );
 
 
-    /* Keep its reminder temporarily */
+    /*
+       Keep Ber Months reminder
+       for two minutes.
+    */
 
     showBerReminder();
 
 
-    /* Activate Christmas */
+    /*
+       Activate Christmas theme.
+    */
 
     document.body.classList.add(
         "christmas-mode"
@@ -290,14 +349,18 @@ function completeBerMonths() {
     createSnow();
 
 
-    /* Popup */
+    /*
+       Christmas popup.
+    */
 
     overlay.classList.add(
         "active"
     );
 
 
-    /* Device vibration */
+    /*
+       Device vibration where supported.
+    */
 
     if (
         navigator.vibrate
@@ -314,7 +377,9 @@ function completeBerMonths() {
     }
 
 
-    /* Close popup */
+    /*
+       Close popup.
+    */
 
     setTimeout(
         () => {
@@ -329,8 +394,8 @@ function completeBerMonths() {
 
 
     /*
-        Two minutes after Ber Months
-        completes, change reminder.
+       Change reminder after
+       two minutes.
     */
 
     setTimeout(
@@ -344,9 +409,9 @@ function completeBerMonths() {
 }
 
 
-/* =========================================================
-   BER MONTHS TIMER
-   ========================================================= */
+/* =====================================================
+   BER COUNTDOWN
+   ===================================================== */
 
 function updateBerCountdown() {
 
@@ -362,10 +427,17 @@ function updateBerCountdown() {
 
     if (remaining <= 0) {
 
-        berDays.textContent = "00";
-        berHours.textContent = "00";
-        berMinutes.textContent = "00";
-        berSeconds.textContent = "00";
+        berDays.textContent =
+            "00";
+
+        berHours.textContent =
+            "00";
+
+        berMinutes.textContent =
+            "00";
+
+        berSeconds.textContent =
+            "00";
 
 
         completeBerMonths();
@@ -418,9 +490,9 @@ function updateBerCountdown() {
 }
 
 
-/* =========================================================
-   NEW YEAR TIMER
-   ========================================================= */
+/* =====================================================
+   NEW YEAR COUNTDOWN
+   ===================================================== */
 
 function updateNewYearCountdown() {
 
@@ -431,10 +503,17 @@ function updateNewYearCountdown() {
 
     if (remaining <= 0) {
 
-        days.textContent = "00";
-        hours.textContent = "00";
-        minutes.textContent = "00";
-        seconds.textContent = "00";
+        days.textContent =
+            "00";
+
+        hours.textContent =
+            "00";
+
+        minutes.textContent =
+            "00";
+
+        seconds.textContent =
+            "00";
 
         return;
     }
@@ -484,9 +563,9 @@ function updateNewYearCountdown() {
 }
 
 
-/* =========================================================
+/* =====================================================
    SNOW
-   ========================================================= */
+   ===================================================== */
 
 function createSnow() {
 
@@ -561,19 +640,26 @@ function createSnow() {
 }
 
 
-/* =========================================================
+/* =====================================================
    CHRISTMAS MUSIC
-   ========================================================= */
+   ===================================================== */
 
-let audioContext = null;
-let musicPlaying = false;
-let musicTimer = null;
-let musicStep = 0;
+let audioContext =
+    null;
+
+let musicPlaying =
+    false;
+
+let musicTimer =
+    null;
+
+let musicStep =
+    0;
 
 
-/* =========================================================
+/* =====================================================
    AUDIO CONTEXT
-   ========================================================= */
+   ===================================================== */
 
 function getAudioContext() {
 
@@ -590,9 +676,9 @@ function getAudioContext() {
 }
 
 
-/* =========================================================
-   NOTE FREQUENCIES
-   ========================================================= */
+/* =====================================================
+   NOTES
+   ===================================================== */
 
 const NOTE = {
 
@@ -612,13 +698,15 @@ const NOTE = {
     A5: 880.00,
     B5: 987.77,
 
-    C6: 1046.50
+    C6: 1046.50,
+    D6: 1174.66,
+    E6: 1318.51
 };
 
 
-/* =========================================================
+/* =====================================================
    MELODY
-   ========================================================= */
+   ===================================================== */
 
 const melody = [
 
@@ -658,9 +746,9 @@ const melody = [
 ];
 
 
-/* =========================================================
+/* =====================================================
    BASS
-   ========================================================= */
+   ===================================================== */
 
 const bass = [
 
@@ -682,9 +770,9 @@ const bass = [
 ];
 
 
-/* =========================================================
+/* =====================================================
    PLAY TONE
-   ========================================================= */
+   ===================================================== */
 
 function playTone(
     frequency,
@@ -715,7 +803,9 @@ function playTone(
     );
 
 
-    oscillator.connect(gain);
+    oscillator.connect(
+        gain
+    );
 
     gain.connect(
         ctx.destination
@@ -763,9 +853,9 @@ function playTone(
 }
 
 
-/* =========================================================
+/* =====================================================
    START MUSIC
-   ========================================================= */
+   ===================================================== */
 
 async function startChristmasMusic() {
 
@@ -786,9 +876,11 @@ async function startChristmasMusic() {
     }
 
 
-    musicPlaying = true;
+    musicPlaying =
+        true;
 
-    musicStep = 0;
+    musicStep =
+        0;
 
 
     musicButton.textContent =
@@ -799,9 +891,9 @@ async function startChristmasMusic() {
 }
 
 
-/* =========================================================
+/* =====================================================
    MUSIC SCHEDULER
-   ========================================================= */
+   ===================================================== */
 
 function scheduleMusic() {
 
@@ -869,6 +961,10 @@ function scheduleMusic() {
     }
 
 
+    /*
+       Small rhythmic beat.
+    */
+
     if (
         musicStep % 2 === 0
     ) {
@@ -894,13 +990,14 @@ function scheduleMusic() {
 }
 
 
-/* =========================================================
+/* =====================================================
    STOP MUSIC
-   ========================================================= */
+   ===================================================== */
 
 function stopChristmasMusic() {
 
-    musicPlaying = false;
+    musicPlaying =
+        false;
 
 
     if (
@@ -911,7 +1008,8 @@ function stopChristmasMusic() {
             musicTimer
         );
 
-        musicTimer = null;
+        musicTimer =
+            null;
     }
 
 
@@ -920,9 +1018,9 @@ function stopChristmasMusic() {
 }
 
 
-/* =========================================================
+/* =====================================================
    MUSIC BUTTON
-   ========================================================= */
+   ===================================================== */
 
 musicButton.addEventListener(
     "click",
@@ -953,9 +1051,9 @@ musicButton.addEventListener(
 );
 
 
-/* =========================================================
+/* =====================================================
    MAIN LOOP
-   ========================================================= */
+   ===================================================== */
 
 function update() {
 
