@@ -1,6 +1,6 @@
-/* =====================================================
-   BASE
-   ===================================================== */
+/* =========================================================
+   RESET
+   ========================================================= */
 
 * {
     box-sizing: border-box;
@@ -8,16 +8,42 @@
     padding: 0;
 }
 
-:root {
-    --red: #d71920;
-    --dark-red: #8f1015;
-    --white: #ffffff;
-    --black: #080808;
-    --gray: #b9b9b9;
+html,
+body {
+    width: 100%;
+    min-height: 100%;
 }
 
+
+/* =========================================================
+   VARIABLES
+   ========================================================= */
+
+:root {
+    --red: #e21b2d;
+    --dark-red: #8b0714;
+    --green: #16833b;
+    --gold: #ffd35a;
+
+    --dark-bg: #030303;
+    --dark-panel: rgba(10, 10, 10, .90);
+
+    --light-text: #ffffff;
+    --dark-text: #202020;
+
+    --muted-light: #bdbdbd;
+    --muted-dark: #596259;
+}
+
+
+/* =========================================================
+   DEFAULT THEME
+   ========================================================= */
+
 body {
+
     min-height: 100vh;
+
     overflow-x: hidden;
 
     font-family:
@@ -25,220 +51,116 @@ body {
         Helvetica,
         sans-serif;
 
-    color: var(--white);
+    color:
+        var(--light-text);
 
     background:
+
         radial-gradient(
-            circle at 50% 0%,
-            rgba(215,25,32,.22),
-            transparent 45%
+            circle at 10% 15%,
+            rgba(226, 27, 45, .70),
+            transparent 32%
         ),
+
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(139, 7, 20, .65),
+            transparent 38%
+        ),
+
         linear-gradient(
-            145deg,
-            #080808,
-            #150405 50%,
-            #080808
+            135deg,
+            #000000,
+            #170306,
+            #050505,
+            #21050a,
+            #000000
         );
 
-    transition:
-        background 2s ease;
-}
-
-
-/* =====================================================
-   CHRISTMAS MODE
-   ===================================================== */
-
-body.christmas-mode {
-    background:
-        radial-gradient(
-            circle at 50% 0%,
-            rgba(215,25,32,.55),
-            transparent 40%
-        ),
-        linear-gradient(
-            145deg,
-            #090909,
-            #650c11 50%,
-            #090909
-        );
-}
-
-
-/* =====================================================
-   BER MONTHS SECTION
-   ===================================================== */
-
-.ber-section {
-    max-height: 300px;
-    opacity: 1;
-    overflow: hidden;
-
-    transform: translateY(0);
-
-    transition:
-        max-height 1s ease,
-        opacity .7s ease,
-        transform .7s ease,
-        margin .7s ease;
-}
-
-body.ber-complete .ber-section {
-    max-height: 0;
-    opacity: 0;
-
-    transform:
-        translateY(-20px);
-
-    margin: 0;
-}
-
-
-/* =====================================================
-   SNOW
-   ===================================================== */
-
-.snow-container {
-    position: fixed;
-    inset: 0;
-
-    z-index: 1;
-
-    pointer-events: none;
-
-    overflow: hidden;
-}
-
-.snowflake {
-    position: absolute;
-    top: -30px;
-
-    color: white;
-    opacity: 0;
+    background-size:
+        200% 200%;
 
     animation:
-        snowfall linear infinite;
+        darkRedMotion
+        12s
+        ease-in-out
+        infinite alternate;
+
+    transition:
+        background 1.5s ease,
+        color 1.5s ease;
 }
 
-@keyframes snowfall {
+
+@keyframes darkRedMotion {
 
     0% {
-        transform:
-            translateY(-30px)
-            rotate(0deg);
-
-        opacity: 0;
+        background-position: 0% 50%;
     }
 
-    10% {
-        opacity: .8;
+    25% {
+        background-position: 50% 20%;
     }
 
-    90% {
-        opacity: .8;
+    50% {
+        background-position: 100% 50%;
+    }
+
+    75% {
+        background-position: 65% 90%;
     }
 
     100% {
-        transform:
-            translateY(110vh)
-            rotate(360deg);
-
-        opacity: 0;
+        background-position: 10% 70%;
     }
 }
 
 
-/* =====================================================
-   CHRISTMAS LIGHTS
-   ===================================================== */
+/* =========================================================
+   CHRISTMAS THEME
+   ========================================================= */
 
-.lights {
-    position: fixed;
+body.christmas-mode {
 
-    top: 0;
-    left: 0;
-    right: 0;
-
-    z-index: 20;
-
-    height: 35px;
-
-    display: flex;
-
-    justify-content: space-around;
-    align-items: center;
-
-    pointer-events: none;
-
-    opacity: 0;
-
-    transform:
-        translateY(-40px);
-
-    transition:
-        opacity 1s ease,
-        transform 1s ease;
-}
-
-.christmas-mode .lights {
-    opacity: 1;
-
-    transform:
-        translateY(0);
-}
-
-.bulb {
-    width: 13px;
-    height: 19px;
-
-    border-radius:
-        50% 50% 45% 45%;
+    color:
+        var(--dark-text);
 
     background:
-        var(--red);
 
-    box-shadow:
-        0 0 12px currentColor;
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(255,255,255,.95),
+            transparent 30%
+        ),
 
-    animation:
-        bulbGlow 1.2s
-        ease-in-out
-        infinite alternate;
-}
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(255,220,100,.75),
+            transparent 25%
+        ),
 
-.bulb:nth-child(even) {
-    background: white;
-    color: white;
+        linear-gradient(
+            135deg,
+            #c8102e,
+            #ed3546 30%,
+            #fffdf2 50%,
+            #22a84b 70%,
+            #08722e
+        );
 
-    animation-delay: .3s;
-}
+    background-size:
+        100% 100%;
 
-.bulb:nth-child(3n) {
-    background: #d71920;
-    color: #d71920;
-
-    animation-delay: .6s;
-}
-
-@keyframes bulbGlow {
-
-    from {
-        filter:
-            brightness(.7);
-    }
-
-    to {
-        filter:
-            brightness(1.5);
-    }
+    animation: none;
 }
 
 
-/* =====================================================
-   MAIN WRAPPER
-   ===================================================== */
+/* =========================================================
+   LAYOUT
+   ========================================================= */
 
 .wrapper {
+
     position: relative;
 
     z-index: 10;
@@ -248,126 +170,259 @@ body.ber-complete .ber-section {
     display: flex;
 
     justify-content: center;
+
     align-items: center;
 
-    padding: 70px 18px;
+    padding: 35px 15px;
 }
 
 
-/* =====================================================
+/* =========================================================
    CARD
-   ===================================================== */
+   ========================================================= */
 
 .card {
-    width: min(920px, 100%);
 
-    padding: 40px;
+    width:
+        min(920px, 100%);
 
-    text-align: center;
+    padding:
+        40px;
+
+    text-align:
+        center;
 
     background:
-        rgba(8,8,8,.88);
+        var(--dark-panel);
 
     border:
-        1px solid
-        rgba(255,255,255,.12);
+        2px solid
+        rgba(226,27,45,.65);
 
-    border-radius: 30px;
+    border-radius:
+        28px;
 
     box-shadow:
-        0 30px 100px
-        rgba(0,0,0,.65);
+        0 25px 80px
+        rgba(0,0,0,.70),
+
+        inset 0 0 50px
+        rgba(226,27,45,.04);
 
     backdrop-filter:
-        blur(15px);
+        blur(18px);
+
+    transition:
+        background 1.5s ease,
+        border-color 1.5s ease,
+        box-shadow 1.5s ease,
+        padding 1s ease;
 }
 
 
-/* =====================================================
-   BER TIMER
-   ===================================================== */
+body.christmas-mode .card {
+
+    background:
+        rgba(255,255,255,.91);
+
+    border-color:
+        rgba(255,255,255,.95);
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,.18);
+}
+
+
+/* =========================================================
+   BER SECTION
+   ========================================================= */
+
+.ber-section {
+
+    max-height: 300px;
+
+    overflow: hidden;
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+    margin-bottom: 5px;
+
+    transition:
+        max-height 1s ease,
+        opacity .7s ease,
+        transform .7s ease,
+        margin .7s ease;
+}
+
+
+body.ber-complete .ber-section {
+
+    max-height: 0;
+
+    opacity: 0;
+
+    transform:
+        translateY(-25px);
+
+    margin-bottom: -10px;
+}
+
+
+/* =========================================================
+   BER TITLE
+   ========================================================= */
 
 .ber-title {
-    font-size:
-        clamp(13px,2vw,17px);
 
-    font-weight: 700;
+    margin-bottom: 15px;
+
+    color:
+        var(--red);
+
+    font-size:
+        clamp(13px, 2vw, 17px);
+
+    font-weight: 800;
 
     letter-spacing: 3px;
 
     text-transform: uppercase;
-
-    margin-bottom: 15px;
 }
 
+
+/* =========================================================
+   BER TIMER
+   ========================================================= */
+
 .ber-timer {
-    display: grid;
 
-    grid-template-columns:
-        repeat(4,1fr);
-
-    gap: 8px;
+    width: 100%;
 
     max-width: 700px;
 
     margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 8px;
 }
 
+
 .ber-unit {
-    padding: 10px 5px;
+
+    width: 100%;
+
+    min-width: 0;
+
+    padding: 12px 5px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
 
     background:
-        rgba(215,25,32,.12);
+        rgba(255,255,255,.045);
 
     border:
-        1px solid
-        rgba(215,25,32,.35);
+        2px solid
+        rgba(226,27,45,.45);
 
     border-radius: 12px;
 }
 
+
+body.christmas-mode .ber-unit {
+
+    background:
+        rgba(22,131,59,.09);
+
+    border-color:
+        rgba(22,131,59,.25);
+}
+
+
 .ber-number {
+
     display: block;
 
-    color: white;
+    width: 100%;
+
+    text-align: center;
+
+    color: #ffffff;
 
     font-family:
         "Courier New",
         monospace;
 
     font-size:
-        clamp(18px,4vw,30px);
+        clamp(18px, 4vw, 30px);
 
-    font-weight: 700;
+    font-weight: 800;
+
+    line-height: 1;
 
     font-variant-numeric:
         tabular-nums;
 }
 
+
+body.christmas-mode .ber-number {
+    color: var(--green);
+}
+
+
 .ber-label {
+
     display: block;
 
-    margin-top: 5px;
+    width: 100%;
 
-    color: #ff5a5f;
+    margin-top: 7px;
+
+    text-align: center;
+
+    color: #ff8b96;
 
     font-size: 8px;
 
+    font-weight: 700;
+
     letter-spacing: 1.5px;
+
+    line-height: 1;
 
     text-transform: uppercase;
 }
 
 
-/* =====================================================
+body.christmas-mode .ber-label {
+    color: var(--red);
+}
+
+
+/* =========================================================
    YEAR
-   ===================================================== */
+   ========================================================= */
 
 .year {
-    margin-top: 30px;
+
+    margin-top: 28px;
 
     font-size:
-        clamp(75px,17vw,160px);
+        clamp(75px, 17vw, 160px);
 
     font-weight: 900;
 
@@ -378,9 +433,9 @@ body.ber-complete .ber-section {
     background:
         linear-gradient(
             180deg,
-            #ffffff,
-            #ffffff 48%,
-            #d71920
+            #ff3348,
+            #e21b2d 45%,
+            #7d0714
         );
 
     -webkit-background-clip: text;
@@ -390,151 +445,264 @@ body.ber-complete .ber-section {
 }
 
 
-/* =====================================================
+body.christmas-mode .year {
+
+    background:
+        linear-gradient(
+            180deg,
+            #d71920,
+            #d71920 45%,
+            #16833b
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+
+/* =========================================================
    TITLE
-   ===================================================== */
+   ========================================================= */
 
 .title {
+
     margin-top: 25px;
 
-    font-size:
-        clamp(27px,5vw,50px);
+    color: #ffffff;
 
-    font-weight: 800;
+    font-size:
+        clamp(27px, 5vw, 50px);
+
+    font-weight: 900;
 
     letter-spacing: 5px;
 
     text-transform: uppercase;
 }
 
+
+body.christmas-mode .title {
+    color: var(--red);
+}
+
+
 .subtitle {
+
     margin-top: 10px;
 
-    color: var(--gray);
+    color: var(--muted-light);
 
     font-size: 14px;
 }
 
 
-/* =====================================================
+body.christmas-mode .subtitle {
+    color: var(--muted-dark);
+}
+
+
+/* =========================================================
    MAIN COUNTDOWN
-   ===================================================== */
+   ========================================================= */
 
 .countdown {
+
     width: 100%;
 
     max-width: 760px;
 
-    margin:
-        38px auto 0;
+    margin: 38px auto 0;
 
     display: grid;
 
     grid-template-columns:
-        repeat(4,minmax(0,1fr));
+        repeat(4, minmax(0, 1fr));
 
     gap: 14px;
 
-    justify-content: center;
+    align-items: stretch;
 }
 
+
+/* =========================================================
+   COUNTDOWN BOX
+   ========================================================= */
+
 .box {
+
     width: 100%;
+
     min-width: 0;
 
-    padding: 22px 8px;
+    min-height: 130px;
+
+    padding: 20px 8px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
 
     background:
-        rgba(255,255,255,.04);
+        rgba(0,0,0,.52);
 
     border:
-        1px solid
-        rgba(255,255,255,.1);
+        3px solid
+        var(--red);
 
     border-radius: 18px;
 
-    transition:
-        transform .2s ease,
-        background .2s ease;
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.35);
 }
 
-.box:hover {
-    transform:
-        translateY(-4px);
+
+.box:nth-child(even) {
+    border-color: #750711;
+}
+
+
+body.christmas-mode .box {
 
     background:
-        rgba(215,25,32,.08);
+        rgba(255,255,255,.92);
+
+    border-color:
+        var(--green);
 }
 
+
+body.christmas-mode .box:nth-child(even) {
+    border-color: var(--red);
+}
+
+
+/* =========================================================
+   MAIN NUMBERS
+   ========================================================= */
+
 .number {
+
     display: block;
 
-    font-size:
-        clamp(30px,7vw,60px);
+    width: 100%;
 
-    font-weight: 800;
+    text-align: center;
+
+    color: #ffffff;
+
+    font-size:
+        clamp(30px, 7vw, 60px);
+
+    font-weight: 900;
+
+    line-height: 1;
 
     font-variant-numeric:
         tabular-nums;
-
-    text-align: center;
 }
 
+
+body.christmas-mode .number {
+    color: var(--dark-text);
+}
+
+
+/* =========================================================
+   MAIN LABELS
+   ========================================================= */
+
 .label {
+
     display: block;
 
-    margin-top: 7px;
+    width: 100%;
 
-    color: #888888;
+    margin-top: 12px;
+
+    text-align: center;
+
+    color: #c9c9c9;
 
     font-size: 10px;
 
-    letter-spacing: 3px;
+    font-weight: 700;
+
+    line-height: 1;
+
+    letter-spacing: 2px;
 
     text-transform: uppercase;
-
-    text-align: center;
 }
 
 
-/* =====================================================
+body.christmas-mode .label {
+    color: var(--muted-dark);
+}
+
+
+/* =========================================================
    REMINDER
-   ===================================================== */
+   ========================================================= */
 
 .info {
+
     margin-top: 30px;
 
     padding: 17px 20px;
 
     background:
-        rgba(215,25,32,.07);
+        rgba(226,27,45,.09);
 
     border-left:
-        4px solid
+        5px solid
         var(--red);
 
-    border-radius: 8px;
+    border-right:
+        5px solid
+        #760711;
 
-    color: #c7c7c7;
+    border-radius: 10px;
+
+    color: #dedede;
 
     font-size: 13px;
 
     line-height: 1.7;
 }
 
-.info strong {
-    color: white;
+
+body.christmas-mode .info {
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(215,25,32,.08),
+            rgba(22,131,59,.08)
+        );
+
+    border-right-color:
+        var(--green);
+
+    color: #536053;
 }
 
 
-/* =====================================================
+/* =========================================================
    TIMEZONE
-   ===================================================== */
+   ========================================================= */
 
 .timezone {
+
     margin-top: 17px;
 
-    color: #777777;
+    color: #9f9f9f;
 
     font-size: 11px;
 
@@ -542,49 +710,269 @@ body.ber-complete .ber-section {
 }
 
 
-/* =====================================================
+body.christmas-mode .timezone {
+    color: #708070;
+}
+
+
+/* =========================================================
    MUSIC BUTTON
-   ===================================================== */
+   ========================================================= */
 
 .music-button {
+
     margin-top: 20px;
 
-    padding: 10px 18px;
+    padding: 11px 20px;
 
     border:
-        1px solid
-        rgba(255,255,255,.2);
+        2px solid
+        var(--red);
 
     border-radius: 999px;
 
-    background:
-        rgba(255,255,255,.06);
+    background: #080808;
 
-    color: white;
+    color: #ffffff;
 
     cursor: pointer;
 
     font-size: 12px;
 
+    font-weight: 700;
+
     transition:
-        background .2s ease,
-        transform .2s ease;
+        transform .2s ease,
+        background .3s ease;
 }
+
 
 .music-button:hover {
-    background:
-        rgba(215,25,32,.35);
-
-    transform:
-        translateY(-2px);
+    transform: translateY(-2px);
 }
 
 
-/* =====================================================
+body.christmas-mode .music-button {
+
+    border-color:
+        var(--green);
+
+    background: #ffffff;
+
+    color: var(--green);
+}
+
+
+/* =========================================================
+   CHRISTMAS LAYER
+   HIDDEN UNTIL CHRISTMAS MODE
+   ========================================================= */
+
+.christmas-layer {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 2;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition: opacity 1.2s ease;
+}
+
+
+body.christmas-mode .christmas-layer {
+
+    opacity: 1;
+
+    visibility: visible;
+}
+
+
+/* =========================================================
+   LIGHTS
+   ========================================================= */
+
+.lights {
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 48px;
+
+    display: flex;
+
+    justify-content: space-around;
+
+    align-items: center;
+}
+
+
+.bulb {
+
+    width: 15px;
+    height: 21px;
+
+    border-radius:
+        50% 50% 45% 45%;
+
+    animation:
+        bulbGlow
+        1s
+        ease-in-out
+        infinite alternate;
+}
+
+
+.bulb:nth-child(3n) {
+
+    background: #d71920;
+
+    box-shadow:
+        0 0 15px #d71920;
+}
+
+
+.bulb:nth-child(3n + 1) {
+
+    background: #2fbf5b;
+
+    box-shadow:
+        0 0 15px #2fbf5b;
+}
+
+
+.bulb:nth-child(3n + 2) {
+
+    background: #f5c542;
+
+    box-shadow:
+        0 0 15px #f5c542;
+}
+
+
+@keyframes bulbGlow {
+
+    from {
+        transform: scale(.8);
+        filter: brightness(.75);
+    }
+
+    to {
+        transform: scale(1.15);
+        filter: brightness(1.5);
+    }
+}
+
+
+/* =========================================================
+   SNOW
+   ========================================================= */
+
+.snow-container {
+
+    position: absolute;
+
+    inset: 0;
+
+    overflow: hidden;
+}
+
+
+.snowflake {
+
+    position: absolute;
+
+    top: -30px;
+
+    color: white;
+
+    opacity: .85;
+
+    animation:
+        snowfall
+        linear
+        infinite;
+}
+
+
+@keyframes snowfall {
+
+    from {
+        transform:
+            translateY(-30px)
+            rotate(0deg);
+    }
+
+    to {
+        transform:
+            translateY(110vh)
+            rotate(360deg);
+    }
+}
+
+
+/* =========================================================
+   DECORATIONS
+   ========================================================= */
+
+.decor {
+
+    position: absolute;
+
+    bottom: 15px;
+
+    font-size:
+        clamp(45px, 7vw, 85px);
+
+    animation:
+        floatDecoration
+        3s
+        ease-in-out
+        infinite alternate;
+}
+
+
+.decor-left {
+    left: 15px;
+}
+
+
+.decor-right {
+    right: 15px;
+}
+
+
+@keyframes floatDecoration {
+
+    from {
+        transform:
+            translateY(0)
+            rotate(-3deg);
+    }
+
+    to {
+        transform:
+            translateY(-12px)
+            rotate(3deg);
+    }
+}
+
+
+/* =========================================================
    CHRISTMAS POPUP
-   ===================================================== */
+   ========================================================= */
 
 .christmas-overlay {
+
     position: fixed;
 
     inset: 0;
@@ -594,76 +982,68 @@ body.ber-complete .ber-section {
     display: flex;
 
     justify-content: center;
+
     align-items: center;
 
     padding: 20px;
 
     background:
-        rgba(0,0,0,.82);
+        rgba(180,0,20,.45);
 
     opacity: 0;
 
     visibility: hidden;
 
-    transition:
-        opacity 1s ease,
-        visibility 1s ease;
+    pointer-events: none;
+
+    transition: opacity .8s ease;
 }
 
+
 .christmas-overlay.active {
+
     opacity: 1;
+
     visibility: visible;
 }
 
+
 .christmas-box {
+
     width:
-        min(800px,95%);
+        min(800px, 95%);
 
-    padding:
-        50px 30px;
+    padding: 50px 30px;
 
-    text-align:
-        center;
+    text-align: center;
 
-    background:
-        linear-gradient(
-            145deg,
-            #ffffff,
-            #fff8f8
-        );
-
-    color:
-        #080808;
+    background: #fffaf0;
 
     border:
-        7px solid
-        var(--red);
+        8px solid
+        #d71920;
 
-    border-radius:
-        28px;
+    border-radius: 28px;
 
     box-shadow:
-        0 0 0 8px
-        rgba(255,255,255,.8),
+        0 30px 80px
+        rgba(120,20,20,.35);
 
-        0 30px 100px
-        rgba(0,0,0,.8);
-
-    transform:
-        scale(.5)
-        rotate(-3deg);
+    transform: scale(.5);
 
     opacity: 0;
 }
 
-.christmas-overlay.active
-.christmas-box {
+
+.christmas-overlay.active .christmas-box {
+
     animation:
         christmasPop
         1.2s
         cubic-bezier(.17,.89,.32,1.28)
         forwards;
 }
+
 
 @keyframes christmasPop {
 
@@ -692,93 +1072,54 @@ body.ber-complete .ber-section {
     }
 }
 
+
 .christmas-icon {
+
     font-size:
-        clamp(50px,10vw,100px);
+        clamp(50px, 10vw, 100px);
 
     margin-bottom: 15px;
 }
 
+
 .christmas-heading {
+
+    color: #d71920;
+
     font-size:
-        clamp(34px,8vw,75px);
+        clamp(34px, 8vw, 75px);
 
-    font-weight: 1000;
-
-    color:
-        var(--red);
+    font-weight: 900;
 }
+
 
 .christmas-message {
+
     margin-top: 15px;
 
-    font-size:
-        clamp(15px,3vw,21px);
-
-    font-weight: 600;
-}
-
-.christmas-small {
-    margin-top: 15px;
-
-    color: #555555;
-
-    font-size: 13px;
-}
-
-
-/* =====================================================
-   CORNER DECORATIONS
-   ===================================================== */
-
-.christmas-corner {
-    position: fixed;
-
-    z-index: 90;
+    color: #202020;
 
     font-size:
-        clamp(45px,7vw,80px);
+        clamp(15px, 3vw, 21px);
 
-    opacity: 0;
+    font-weight: 700;
 
-    pointer-events: none;
-
-    transition:
-        opacity 1s ease;
-}
-
-.christmas-mode
-.christmas-corner {
-    opacity: 1;
-}
-
-.corner-left {
-    bottom: 10px;
-    left: 10px;
-}
-
-.corner-right {
-    bottom: 10px;
-    right: 10px;
+    line-height: 1.5;
 }
 
 
-/* =====================================================
+/* =========================================================
    MOBILE
-   ===================================================== */
+   ========================================================= */
 
-@media (max-width:600px) {
+@media (max-width: 600px) {
 
     .card {
-        padding: 32px 12px;
+        padding: 30px 12px;
     }
 
     .ber-timer {
         gap: 5px;
-    }
-
-    .ber-unit {
-        padding: 9px 3px;
     }
 
     .countdown {
@@ -786,10 +1127,19 @@ body.ber-complete .ber-section {
     }
 
     .box {
-        padding: 18px 4px;
+        min-height: 110px;
+        padding: 16px 4px;
     }
 
     .title {
         letter-spacing: 3px;
+    }
+
+    .year {
+        letter-spacing: -5px;
+    }
+
+    .decor {
+        font-size: 45px;
     }
 }
