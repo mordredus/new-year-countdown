@@ -1,875 +1,486 @@
 /* =========================================================
-   RESET
+   CONFIGURATION
    ========================================================= */
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+/*
+    REAL TARGET:
 
-html,
-body {
-    width: 100%;
-    min-height: 100%;
-}
+    September 1, 2026
+    12:00:00 AM
+
+    The Date constructor uses the device's LOCAL timezone.
+*/
+
+const berTarget = new Date(
+    2026,
+    8,
+    1,
+    0,
+    0,
+    0,
+    0
+);
+
+
+/*
+    New Year target:
+
+    January 1, 2027
+    12:00:00 AM
+
+    Also based on the device's LOCAL timezone.
+*/
+
+const newYearTarget = new Date(
+    2027,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0
+);
 
 
 /* =========================================================
-   VARIABLES
+   STORAGE
    ========================================================= */
 
-:root {
-    --red: #e21b2d;
-    --dark-red: #8b0714;
-    --green: #16833b;
-    --gold: #ffd35a;
+const transitionKey =
+    "newYear2027_berComplete_v5";
 
-    --dark-bg: #030303;
-    --dark-panel: rgba(10, 10, 10, .90);
-
-    --light-text: #ffffff;
-    --dark-text: #202020;
-
-    --muted-light: #bdbdbd;
-    --muted-dark: #596259;
-}
+const transitionTimeKey =
+    "newYear2027_transitionTime_v5";
 
 
 /* =========================================================
-   DEFAULT THEME
+   ELEMENTS
    ========================================================= */
 
-body {
+const berDays =
+    document.getElementById("berDays");
 
-    min-height: 100vh;
+const berHours =
+    document.getElementById("berHours");
 
-    overflow-x: hidden;
+const berMinutes =
+    document.getElementById("berMinutes");
 
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+const berSeconds =
+    document.getElementById("berSeconds");
 
-    color:
-        var(--light-text);
 
-    background:
+const days =
+    document.getElementById("days");
 
-        radial-gradient(
-            circle at 10% 15%,
-            rgba(226, 27, 45, .70),
-            transparent 32%
-        ),
+const hours =
+    document.getElementById("hours");
 
-        radial-gradient(
-            circle at 85% 80%,
-            rgba(139, 7, 20, .65),
-            transparent 38%
-        ),
+const minutes =
+    document.getElementById("minutes");
 
-        linear-gradient(
-            135deg,
-            #000000,
-            #170306,
-            #050505,
-            #21050a,
-            #000000
-        );
+const seconds =
+    document.getElementById("seconds");
 
-    background-size:
-        200% 200%;
 
-    animation:
-        darkRedMotion
-        12s
-        ease-in-out
-        infinite alternate;
+const reminder =
+    document.getElementById("reminder");
 
-    transition:
-        background 1.5s ease,
-        color 1.5s ease;
-}
+const timezone =
+    document.getElementById("timezone");
 
+const overlay =
+    document.getElementById(
+        "christmasOverlay"
+    );
 
-@keyframes darkRedMotion {
-
-    0% {
-        background-position: 0% 50%;
-    }
-
-    25% {
-        background-position: 50% 20%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    75% {
-        background-position: 65% 90%;
-    }
-
-    100% {
-        background-position: 10% 70%;
-    }
-}
-
-
-/* =========================================================
-   CHRISTMAS THEME
-   ========================================================= */
-
-body.christmas-mode {
-
-    color:
-        var(--dark-text);
-
-    background:
-
-        radial-gradient(
-            circle at 10% 10%,
-            rgba(255,255,255,.95),
-            transparent 30%
-        ),
-
-        radial-gradient(
-            circle at 90% 10%,
-            rgba(255,220,100,.75),
-            transparent 25%
-        ),
-
-        linear-gradient(
-            135deg,
-            #c8102e,
-            #ed3546 30%,
-            #fffdf2 50%,
-            #22a84b 70%,
-            #08722e
-        );
-
-    background-size:
-        100% 100%;
-
-    animation: none;
-}
-
-
-/* =========================================================
-   LAYOUT
-   ========================================================= */
-
-.wrapper {
-
-    position: relative;
-
-    z-index: 10;
-
-    min-height: 100vh;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    padding: 35px 15px;
-}
-
-
-/* =========================================================
-   CARD
-   ========================================================= */
-
-.card {
-
-    width:
-        min(920px, 100%);
-
-    padding:
-        40px;
-
-    text-align:
-        center;
-
-    background:
-        var(--dark-panel);
-
-    border:
-        2px solid
-        rgba(226,27,45,.65);
-
-    border-radius:
-        28px;
-
-    box-shadow:
-        0 25px 80px
-        rgba(0,0,0,.70),
-
-        inset 0 0 50px
-        rgba(226,27,45,.04);
-
-    backdrop-filter:
-        blur(18px);
-
-    transition:
-        background 1.5s ease,
-        border-color 1.5s ease,
-        box-shadow 1.5s ease,
-        padding 1s ease;
-}
-
-
-body.christmas-mode .card {
-
-    background:
-        rgba(255,255,255,.91);
-
-    border-color:
-        rgba(255,255,255,.95);
-
-    box-shadow:
-        0 25px 70px
-        rgba(0,0,0,.18);
-}
-
-
-/* =========================================================
-   BER SECTION
-   ========================================================= */
-
-.ber-section {
-
-    max-height: 300px;
-
-    overflow: hidden;
-
-    opacity: 1;
-
-    transform: translateY(0);
-
-    margin-bottom: 5px;
-
-    transition:
-        max-height 1s ease,
-        opacity .7s ease,
-        transform .7s ease,
-        margin .7s ease;
-}
-
-
-body.ber-complete .ber-section {
-
-    max-height: 0;
-
-    opacity: 0;
-
-    transform:
-        translateY(-25px);
-
-    margin-bottom: -10px;
-}
-
-
-/* =========================================================
-   BER TITLE
-   ========================================================= */
-
-.ber-title {
-
-    margin-bottom: 15px;
-
-    color:
-        var(--red);
-
-    font-size:
-        clamp(13px, 2vw, 17px);
-
-    font-weight: 800;
-
-    letter-spacing: 3px;
-
-    text-transform: uppercase;
-}
-
-
-/* =========================================================
-   BER TIMER
-   ========================================================= */
-
-.ber-timer {
-
-    width: 100%;
-
-    max-width: 700px;
-
-    margin: 0 auto;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(4, minmax(0, 1fr));
-
-    gap: 8px;
-}
-
-
-.ber-unit {
-
-    width: 100%;
-
-    min-width: 0;
-
-    padding: 12px 5px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
-    align-items: center;
-
-    text-align: center;
-
-    background:
-        rgba(255,255,255,.045);
-
-    border:
-        2px solid
-        rgba(226,27,45,.45);
-
-    border-radius: 12px;
-}
-
-
-body.christmas-mode .ber-unit {
-
-    background:
-        rgba(22,131,59,.09);
-
-    border-color:
-        rgba(22,131,59,.25);
-}
-
-
-.ber-number {
-
-    display: block;
-
-    width: 100%;
-
-    text-align: center;
-
-    color: #ffffff;
-
-    font-family:
-        "Courier New",
-        monospace;
-
-    font-size:
-        clamp(18px, 4vw, 30px);
-
-    font-weight: 800;
-
-    line-height: 1;
-
-    font-variant-numeric:
-        tabular-nums;
-}
-
-
-body.christmas-mode .ber-number {
-    color: var(--green);
-}
-
-
-.ber-label {
-
-    display: block;
-
-    width: 100%;
-
-    margin-top: 7px;
-
-    text-align: center;
-
-    color: #ff8b96;
-
-    font-size: 8px;
-
-    font-weight: 700;
-
-    letter-spacing: 1.5px;
-
-    line-height: 1;
-
-    text-transform: uppercase;
-}
-
-
-body.christmas-mode .ber-label {
-    color: var(--red);
-}
-
-
-/* =========================================================
-   YEAR
-   ========================================================= */
-
-.year {
-
-    margin-top: 28px;
-
-    font-size:
-        clamp(75px, 17vw, 160px);
-
-    font-weight: 900;
-
-    line-height: .85;
-
-    letter-spacing: -8px;
-
-    background:
-        linear-gradient(
-            180deg,
-            #ff3348,
-            #e21b2d 45%,
-            #7d0714
-        );
-
-    -webkit-background-clip: text;
-    background-clip: text;
-
-    color: transparent;
-}
-
-
-body.christmas-mode .year {
-
-    background:
-        linear-gradient(
-            180deg,
-            #d71920,
-            #d71920 45%,
-            #16833b
-        );
-
-    -webkit-background-clip: text;
-    background-clip: text;
-}
-
-
-/* =========================================================
-   TITLE
-   ========================================================= */
-
-.title {
-
-    margin-top: 25px;
-
-    color: #ffffff;
-
-    font-size:
-        clamp(27px, 5vw, 50px);
-
-    font-weight: 900;
-
-    letter-spacing: 5px;
-
-    text-transform: uppercase;
-}
-
-
-body.christmas-mode .title {
-    color: var(--red);
-}
-
-
-.subtitle {
-
-    margin-top: 10px;
-
-    color: var(--muted-light);
-
-    font-size: 14px;
-}
-
-
-body.christmas-mode .subtitle {
-    color: var(--muted-dark);
-}
-
-
-/* =========================================================
-   MAIN COUNTDOWN
-   ========================================================= */
-
-.countdown {
-
-    width: 100%;
-
-    max-width: 760px;
-
-    margin: 38px auto 0;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(4, minmax(0, 1fr));
-
-    gap: 14px;
-
-    align-items: stretch;
-}
-
-
-/* =========================================================
-   COUNTDOWN BOX
-   ========================================================= */
-
-.box {
-
-    width: 100%;
-
-    min-width: 0;
-
-    min-height: 130px;
-
-    padding: 20px 8px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
-    align-items: center;
-
-    text-align: center;
-
-    background:
-        rgba(0,0,0,.52);
-
-    border:
-        3px solid
-        var(--red);
-
-    border-radius: 18px;
-
-    box-shadow:
-        0 8px 25px
-        rgba(0,0,0,.35);
-}
-
-
-.box:nth-child(even) {
-    border-color: #750711;
-}
-
-
-body.christmas-mode .box {
-
-    background:
-        rgba(255,255,255,.92);
-
-    border-color:
-        var(--green);
-}
-
-
-body.christmas-mode .box:nth-child(even) {
-    border-color: var(--red);
-}
-
-
-/* =========================================================
-   MAIN NUMBERS
-   ========================================================= */
-
-.number {
-
-    display: block;
-
-    width: 100%;
-
-    text-align: center;
-
-    color: #ffffff;
-
-    font-size:
-        clamp(30px, 7vw, 60px);
-
-    font-weight: 900;
-
-    line-height: 1;
-
-    font-variant-numeric:
-        tabular-nums;
-}
-
-
-body.christmas-mode .number {
-    color: var(--dark-text);
-}
-
-
-/* =========================================================
-   MAIN LABELS
-   ========================================================= */
-
-.label {
-
-    display: block;
-
-    width: 100%;
-
-    margin-top: 12px;
-
-    text-align: center;
-
-    color: #c9c9c9;
-
-    font-size: 10px;
-
-    font-weight: 700;
-
-    line-height: 1;
-
-    letter-spacing: 2px;
-
-    text-transform: uppercase;
-}
-
-
-body.christmas-mode .label {
-    color: var(--muted-dark);
-}
-
-
-/* =========================================================
-   REMINDER
-   ========================================================= */
-
-.info {
-
-    margin-top: 30px;
-
-    padding: 17px 20px;
-
-    background:
-        rgba(226,27,45,.09);
-
-    border-left:
-        5px solid
-        var(--red);
-
-    border-right:
-        5px solid
-        #760711;
-
-    border-radius: 10px;
-
-    color: #dedede;
-
-    font-size: 13px;
-
-    line-height: 1.7;
-}
-
-
-body.christmas-mode .info {
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(215,25,32,.08),
-            rgba(22,131,59,.08)
-        );
-
-    border-right-color:
-        var(--green);
-
-    color: #536053;
-}
+const musicButton =
+    document.getElementById(
+        "musicButton"
+    );
 
 
 /* =========================================================
    TIMEZONE
    ========================================================= */
 
-.timezone {
+const detectedTimezone =
+    Intl.DateTimeFormat()
+        .resolvedOptions()
+        .timeZone;
 
-    margin-top: 17px;
+timezone.textContent =
+    "LOCAL TIMEZONE • " +
+    detectedTimezone;
 
-    color: #9f9f9f;
 
-    font-size: 11px;
+/* =========================================================
+   STATE
+   ========================================================= */
 
-    letter-spacing: 1px;
+let christmasStarted =
+    localStorage.getItem(
+        transitionKey
+    ) === "true";
+
+
+let transitionTimestamp =
+    Number(
+        localStorage.getItem(
+            transitionTimeKey
+        )
+    ) || 0;
+
+
+/* =========================================================
+   REMINDERS
+   ========================================================= */
+
+function showBerReminder() {
+
+    reminder.innerHTML = `
+
+        <strong>
+            THE BER MONTHS ARE HERE!
+        </strong>
+
+        <br>
+
+        September 1, 2026 —
+        12:00:00 AM
+
+        <br>
+
+        Christmas season has officially begun.
+
+    `;
 }
 
 
-body.christmas-mode .timezone {
-    color: #708070;
+function showNewYearReminder() {
+
+    reminder.innerHTML = `
+
+        <strong>
+            NEW YEAR'S COUNTDOWN
+        </strong>
+
+        <br>
+
+        January 1, 2027 —
+        12:00:00 AM
+
+        <br>
+
+        The Ber Months have officially begun.
+        The countdown to 2027 continues.
+
+    `;
 }
 
 
 /* =========================================================
-   MUSIC BUTTON
+   RESTORE COMPLETED STATE
    ========================================================= */
 
-.music-button {
+function restoreCompletedState() {
 
-    margin-top: 20px;
+    document.body.classList.add(
+        "ber-complete"
+    );
 
-    padding: 11px 20px;
+    document.body.classList.add(
+        "christmas-mode"
+    );
 
-    border:
-        2px solid
-        var(--red);
+    createSnow();
 
-    border-radius: 999px;
 
-    background: #080808;
+    const elapsed =
+        Date.now() -
+        transitionTimestamp;
 
-    color: #ffffff;
 
-    cursor: pointer;
+    const twoMinutes =
+        120000;
 
-    font-size: 12px;
 
-    font-weight: 700;
+    if (
+        transitionTimestamp &&
+        elapsed >= twoMinutes
+    ) {
 
-    transition:
-        transform .2s ease,
-        background .3s ease;
+        showNewYearReminder();
+
+    } else {
+
+        showBerReminder();
+
+
+        const remaining =
+            Math.max(
+                0,
+                twoMinutes - elapsed
+            );
+
+
+        setTimeout(
+            showNewYearReminder,
+            remaining
+        );
+    }
 }
 
 
-.music-button:hover {
-    transform: translateY(-2px);
-}
-
-
-body.christmas-mode .music-button {
-
-    border-color:
-        var(--green);
-
-    background: #ffffff;
-
-    color: var(--green);
+if (christmasStarted) {
+    restoreCompletedState();
 }
 
 
 /* =========================================================
-   CHRISTMAS LAYER
-   HIDDEN UNTIL CHRISTMAS MODE
+   BER MONTHS COMPLETION
    ========================================================= */
 
-.christmas-layer {
+function completeBerMonths() {
 
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 2;
-
-    pointer-events: none;
-
-    opacity: 0;
-
-    visibility: hidden;
-
-    transition: opacity 1.2s ease;
-}
-
-
-body.christmas-mode .christmas-layer {
-
-    opacity: 1;
-
-    visibility: visible;
-}
-
-
-/* =========================================================
-   LIGHTS
-   ========================================================= */
-
-.lights {
-
-    position: absolute;
-
-    top: 0;
-    left: 0;
-    right: 0;
-
-    height: 48px;
-
-    display: flex;
-
-    justify-content: space-around;
-
-    align-items: center;
-}
-
-
-.bulb {
-
-    width: 15px;
-    height: 21px;
-
-    border-radius:
-        50% 50% 45% 45%;
-
-    animation:
-        bulbGlow
-        1s
-        ease-in-out
-        infinite alternate;
-}
-
-
-.bulb:nth-child(3n) {
-
-    background: #d71920;
-
-    box-shadow:
-        0 0 15px #d71920;
-}
-
-
-.bulb:nth-child(3n + 1) {
-
-    background: #2fbf5b;
-
-    box-shadow:
-        0 0 15px #2fbf5b;
-}
-
-
-.bulb:nth-child(3n + 2) {
-
-    background: #f5c542;
-
-    box-shadow:
-        0 0 15px #f5c542;
-}
-
-
-@keyframes bulbGlow {
-
-    from {
-        transform: scale(.8);
-        filter: brightness(.75);
+    if (christmasStarted) {
+        return;
     }
 
-    to {
-        transform: scale(1.15);
-        filter: brightness(1.5);
+
+    christmasStarted = true;
+
+
+    transitionTimestamp =
+        Date.now();
+
+
+    localStorage.setItem(
+        transitionKey,
+        "true"
+    );
+
+    localStorage.setItem(
+        transitionTimeKey,
+        String(
+            transitionTimestamp
+        )
+    );
+
+
+    /* Remove Ber Months timer */
+
+    document.body.classList.add(
+        "ber-complete"
+    );
+
+
+    /* Keep its reminder temporarily */
+
+    showBerReminder();
+
+
+    /* Activate Christmas */
+
+    document.body.classList.add(
+        "christmas-mode"
+    );
+
+
+    createSnow();
+
+
+    /* Popup */
+
+    overlay.classList.add(
+        "active"
+    );
+
+
+    /* Device vibration */
+
+    if (
+        navigator.vibrate
+    ) {
+
+        navigator.vibrate([
+            200,
+            100,
+            200,
+            100,
+            400
+        ]);
+
     }
+
+
+    /* Close popup */
+
+    setTimeout(
+        () => {
+
+            overlay.classList.remove(
+                "active"
+            );
+
+        },
+        6000
+    );
+
+
+    /*
+        Two minutes after Ber Months
+        completes, change reminder.
+    */
+
+    setTimeout(
+        () => {
+
+            showNewYearReminder();
+
+        },
+        120000
+    );
+}
+
+
+/* =========================================================
+   BER MONTHS TIMER
+   ========================================================= */
+
+function updateBerCountdown() {
+
+    if (christmasStarted) {
+        return;
+    }
+
+
+    const remaining =
+        berTarget.getTime() -
+        Date.now();
+
+
+    if (remaining <= 0) {
+
+        berDays.textContent = "00";
+        berHours.textContent = "00";
+        berMinutes.textContent = "00";
+        berSeconds.textContent = "00";
+
+
+        completeBerMonths();
+
+        return;
+    }
+
+
+    const totalSeconds =
+        Math.floor(
+            remaining / 1000
+        );
+
+
+    const d =
+        Math.floor(
+            totalSeconds / 86400
+        );
+
+
+    const h =
+        Math.floor(
+            (totalSeconds % 86400) /
+            3600
+        );
+
+
+    const m =
+        Math.floor(
+            (totalSeconds % 3600) /
+            60
+        );
+
+
+    const s =
+        totalSeconds % 60;
+
+
+    berDays.textContent =
+        String(d).padStart(2, "0");
+
+    berHours.textContent =
+        String(h).padStart(2, "0");
+
+    berMinutes.textContent =
+        String(m).padStart(2, "0");
+
+    berSeconds.textContent =
+        String(s).padStart(2, "0");
+}
+
+
+/* =========================================================
+   NEW YEAR TIMER
+   ========================================================= */
+
+function updateNewYearCountdown() {
+
+    const remaining =
+        newYearTarget.getTime() -
+        Date.now();
+
+
+    if (remaining <= 0) {
+
+        days.textContent = "00";
+        hours.textContent = "00";
+        minutes.textContent = "00";
+        seconds.textContent = "00";
+
+        return;
+    }
+
+
+    const totalSeconds =
+        Math.floor(
+            remaining / 1000
+        );
+
+
+    const d =
+        Math.floor(
+            totalSeconds / 86400
+        );
+
+
+    const h =
+        Math.floor(
+            (totalSeconds % 86400) /
+            3600
+        );
+
+
+    const m =
+        Math.floor(
+            (totalSeconds % 3600) /
+            60
+        );
+
+
+    const s =
+        totalSeconds % 60;
+
+
+    days.textContent =
+        String(d).padStart(2, "0");
+
+    hours.textContent =
+        String(h).padStart(2, "0");
+
+    minutes.textContent =
+        String(m).padStart(2, "0");
+
+    seconds.textContent =
+        String(s).padStart(2, "0");
 }
 
 
@@ -877,269 +488,485 @@ body.christmas-mode .christmas-layer {
    SNOW
    ========================================================= */
 
-.snow-container {
+function createSnow() {
 
-    position: absolute;
-
-    inset: 0;
-
-    overflow: hidden;
-}
+    const container =
+        document.getElementById(
+            "snowContainer"
+        );
 
 
-.snowflake {
-
-    position: absolute;
-
-    top: -30px;
-
-    color: white;
-
-    opacity: .85;
-
-    animation:
-        snowfall
-        linear
-        infinite;
-}
-
-
-@keyframes snowfall {
-
-    from {
-        transform:
-            translateY(-30px)
-            rotate(0deg);
+    if (
+        container.children.length > 0
+    ) {
+        return;
     }
 
-    to {
-        transform:
-            translateY(110vh)
-            rotate(360deg);
-    }
-}
+
+    for (
+        let i = 0;
+        i < 90;
+        i++
+    ) {
+
+        const snow =
+            document.createElement(
+                "div"
+            );
 
 
-/* =========================================================
-   DECORATIONS
-   ========================================================= */
-
-.decor {
-
-    position: absolute;
-
-    bottom: 15px;
-
-    font-size:
-        clamp(45px, 7vw, 85px);
-
-    animation:
-        floatDecoration
-        3s
-        ease-in-out
-        infinite alternate;
-}
+        snow.className =
+            "snowflake";
 
 
-.decor-left {
-    left: 15px;
-}
+        snow.textContent =
+            Math.random() > .35
+                ? "❄"
+                : "✦";
 
 
-.decor-right {
-    right: 15px;
-}
+        snow.style.left =
+            Math.random() *
+            100 +
+            "%";
 
 
-@keyframes floatDecoration {
+        snow.style.fontSize =
+            (
+                8 +
+                Math.random() * 18
+            ) +
+            "px";
 
-    from {
-        transform:
-            translateY(0)
-            rotate(-3deg);
-    }
 
-    to {
-        transform:
-            translateY(-12px)
-            rotate(3deg);
+        snow.style.animationDuration =
+            (
+                5 +
+                Math.random() * 9
+            ) +
+            "s";
+
+
+        snow.style.animationDelay =
+            (
+                Math.random() * 8
+            ) +
+            "s";
+
+
+        container.appendChild(
+            snow
+        );
     }
 }
 
 
 /* =========================================================
-   CHRISTMAS POPUP
+   CHRISTMAS MUSIC
    ========================================================= */
 
-.christmas-overlay {
-
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 100;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    padding: 20px;
-
-    background:
-        rgba(180,0,20,.45);
-
-    opacity: 0;
-
-    visibility: hidden;
-
-    pointer-events: none;
-
-    transition: opacity .8s ease;
-}
+let audioContext = null;
+let musicPlaying = false;
+let musicTimer = null;
+let musicStep = 0;
 
 
-.christmas-overlay.active {
+/* =========================================================
+   AUDIO CONTEXT
+   ========================================================= */
 
-    opacity: 1;
+function getAudioContext() {
 
-    visibility: visible;
-}
+    if (!audioContext) {
 
-
-.christmas-box {
-
-    width:
-        min(800px, 95%);
-
-    padding: 50px 30px;
-
-    text-align: center;
-
-    background: #fffaf0;
-
-    border:
-        8px solid
-        #d71920;
-
-    border-radius: 28px;
-
-    box-shadow:
-        0 30px 80px
-        rgba(120,20,20,.35);
-
-    transform: scale(.5);
-
-    opacity: 0;
-}
-
-
-.christmas-overlay.active .christmas-box {
-
-    animation:
-        christmasPop
-        1.2s
-        cubic-bezier(.17,.89,.32,1.28)
-        forwards;
-}
-
-
-@keyframes christmasPop {
-
-    0% {
-        transform:
-            scale(.5)
-            rotate(-3deg);
-
-        opacity: 0;
+        audioContext =
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
     }
 
-    60% {
-        transform:
-            scale(1.08)
-            rotate(1deg);
-
-        opacity: 1;
-    }
-
-    100% {
-        transform:
-            scale(1)
-            rotate(0);
-
-        opacity: 1;
-    }
-}
-
-
-.christmas-icon {
-
-    font-size:
-        clamp(50px, 10vw, 100px);
-
-    margin-bottom: 15px;
-}
-
-
-.christmas-heading {
-
-    color: #d71920;
-
-    font-size:
-        clamp(34px, 8vw, 75px);
-
-    font-weight: 900;
-}
-
-
-.christmas-message {
-
-    margin-top: 15px;
-
-    color: #202020;
-
-    font-size:
-        clamp(15px, 3vw, 21px);
-
-    font-weight: 700;
-
-    line-height: 1.5;
+    return audioContext;
 }
 
 
 /* =========================================================
-   MOBILE
+   NOTE FREQUENCIES
    ========================================================= */
 
-@media (max-width: 600px) {
+const NOTE = {
 
-    .card {
-        padding: 30px 12px;
-    }
+    C4: 261.63,
+    D4: 293.66,
+    E4: 329.63,
+    F4: 349.23,
+    G4: 392.00,
+    A4: 440.00,
+    B4: 493.88,
 
-    .ber-timer {
-        gap: 5px;
-    }
+    C5: 523.25,
+    D5: 587.33,
+    E5: 659.25,
+    F5: 698.46,
+    G5: 783.99,
+    A5: 880.00,
+    B5: 987.77,
 
-    .countdown {
-        gap: 6px;
-    }
+    C6: 1046.50
+};
 
-    .box {
-        min-height: 110px;
-        padding: 16px 4px;
-    }
 
-    .title {
-        letter-spacing: 3px;
-    }
+/* =========================================================
+   MELODY
+   ========================================================= */
 
-    .year {
-        letter-spacing: -5px;
-    }
+const melody = [
 
-    .decor {
-        font-size: 45px;
-    }
+    ["E5", .30],
+    ["E5", .30],
+    ["E5", .45],
+    [null, .15],
+
+    ["E5", .30],
+    ["E5", .30],
+    ["E5", .45],
+    [null, .15],
+
+    ["E5", .30],
+    ["G5", .30],
+    ["C5", .30],
+    ["D5", .30],
+    ["E5", .60],
+
+    ["F5", .30],
+    ["F5", .30],
+    ["F5", .30],
+    ["F5", .30],
+
+    ["F5", .30],
+    ["E5", .30],
+    ["E5", .30],
+    ["E5", .30],
+
+    ["E5", .30],
+    ["D5", .30],
+    ["D5", .30],
+    ["E5", .30],
+    ["D5", .30],
+    ["G5", .60]
+
+];
+
+
+/* =========================================================
+   BASS
+   ========================================================= */
+
+const bass = [
+
+    "C4",
+    "C4",
+    "G4",
+    "G4",
+
+    "C4",
+    "C4",
+    "F4",
+    "F4",
+
+    "G4",
+    "G4",
+    "C4",
+    "C4"
+
+];
+
+
+/* =========================================================
+   PLAY TONE
+   ========================================================= */
+
+function playTone(
+    frequency,
+    startTime,
+    duration,
+    volume,
+    type = "sine"
+) {
+
+    const ctx =
+        getAudioContext();
+
+
+    const oscillator =
+        ctx.createOscillator();
+
+    const gain =
+        ctx.createGain();
+
+
+    oscillator.type =
+        type;
+
+
+    oscillator.frequency.setValueAtTime(
+        frequency,
+        startTime
+    );
+
+
+    oscillator.connect(gain);
+
+    gain.connect(
+        ctx.destination
+    );
+
+
+    gain.gain.setValueAtTime(
+        .0001,
+        startTime
+    );
+
+
+    gain.gain.linearRampToValueAtTime(
+        volume,
+        startTime + .025
+    );
+
+
+    gain.gain.setValueAtTime(
+        volume,
+        startTime +
+        Math.max(
+            .03,
+            duration - .06
+        )
+    );
+
+
+    gain.gain.exponentialRampToValueAtTime(
+        .0001,
+        startTime + duration
+    );
+
+
+    oscillator.start(
+        startTime
+    );
+
+
+    oscillator.stop(
+        startTime +
+        duration +
+        .03
+    );
 }
+
+
+/* =========================================================
+   START MUSIC
+   ========================================================= */
+
+async function startChristmasMusic() {
+
+    const ctx =
+        getAudioContext();
+
+
+    if (
+        ctx.state === "suspended"
+    ) {
+
+        await ctx.resume();
+    }
+
+
+    if (musicPlaying) {
+        return;
+    }
+
+
+    musicPlaying = true;
+
+    musicStep = 0;
+
+
+    musicButton.textContent =
+        "♫ Christmas Music — ON";
+
+
+    scheduleMusic();
+}
+
+
+/* =========================================================
+   MUSIC SCHEDULER
+   ========================================================= */
+
+function scheduleMusic() {
+
+    if (!musicPlaying) {
+        return;
+    }
+
+
+    const ctx =
+        getAudioContext();
+
+
+    const now =
+        ctx.currentTime;
+
+
+    const current =
+        melody[
+            musicStep %
+            melody.length
+        ];
+
+
+    const note =
+        current[0];
+
+    const duration =
+        current[1];
+
+
+    if (
+        note !== null
+    ) {
+
+        playTone(
+            NOTE[note],
+            now,
+            duration * .9,
+            .075,
+            "triangle"
+        );
+    }
+
+
+    if (
+        musicStep % 2 === 0
+    ) {
+
+        const bassNote =
+            bass[
+                Math.floor(
+                    musicStep / 2
+                ) %
+                bass.length
+            ];
+
+
+        playTone(
+            NOTE[bassNote],
+            now,
+            .45,
+            .035,
+            "sine"
+        );
+    }
+
+
+    if (
+        musicStep % 2 === 0
+    ) {
+
+        playTone(
+            1100,
+            now,
+            .035,
+            .007,
+            "square"
+        );
+    }
+
+
+    musicStep++;
+
+
+    musicTimer =
+        setTimeout(
+            scheduleMusic,
+            300
+        );
+}
+
+
+/* =========================================================
+   STOP MUSIC
+   ========================================================= */
+
+function stopChristmasMusic() {
+
+    musicPlaying = false;
+
+
+    if (
+        musicTimer !== null
+    ) {
+
+        clearTimeout(
+            musicTimer
+        );
+
+        musicTimer = null;
+    }
+
+
+    musicButton.textContent =
+        "♫ Enable Christmas Music";
+}
+
+
+/* =========================================================
+   MUSIC BUTTON
+   ========================================================= */
+
+musicButton.addEventListener(
+    "click",
+    async () => {
+
+        if (musicPlaying) {
+
+            stopChristmasMusic();
+
+        } else {
+
+            try {
+
+                await startChristmasMusic();
+
+            } catch (error) {
+
+                console.error(
+                    "Audio error:",
+                    error
+                );
+
+                musicButton.textContent =
+                    "♫ Audio unavailable";
+            }
+        }
+    }
+);
+
+
+/* =========================================================
+   MAIN LOOP
+   ========================================================= */
+
+function update() {
+
+    updateBerCountdown();
+
+    updateNewYearCountdown();
+
+    requestAnimationFrame(
+        update
+    );
+}
+
+
+update();
