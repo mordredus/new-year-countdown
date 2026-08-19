@@ -1,6 +1,15 @@
-/* =====================================================
-   TARGET DATES
-   ===================================================== */
+/* =========================================================
+   CONFIGURATION
+   ========================================================= */
+
+/*
+    REAL TARGET:
+
+    September 1, 2026
+    12:00:00 AM
+
+    The Date constructor uses the device's LOCAL timezone.
+*/
 
 const berTarget = new Date(
     2026,
@@ -11,6 +20,16 @@ const berTarget = new Date(
     0,
     0
 );
+
+
+/*
+    New Year target:
+
+    January 1, 2027
+    12:00:00 AM
+
+    Also based on the device's LOCAL timezone.
+*/
 
 const newYearTarget = new Date(
     2027,
@@ -23,12 +42,20 @@ const newYearTarget = new Date(
 );
 
 
-/* =====================================================
-   ELEMENTS
-   ===================================================== */
+/* =========================================================
+   STORAGE
+   ========================================================= */
 
-const berSection =
-    document.getElementById("berSection");
+const transitionKey =
+    "newYear2027_berComplete_v5";
+
+const transitionTimeKey =
+    "newYear2027_transitionTime_v5";
+
+
+/* =========================================================
+   ELEMENTS
+   ========================================================= */
 
 const berDays =
     document.getElementById("berDays");
@@ -62,7 +89,7 @@ const reminder =
 const timezone =
     document.getElementById("timezone");
 
-const christmasOverlay =
+const overlay =
     document.getElementById(
         "christmasOverlay"
     );
@@ -73,52 +100,69 @@ const musicButton =
     );
 
 
-/* =====================================================
+/* =========================================================
    TIMEZONE
-   ===================================================== */
+   ========================================================= */
 
-timezone.textContent =
-    "LOCAL TIMEZONE • " +
+const detectedTimezone =
     Intl.DateTimeFormat()
         .resolvedOptions()
         .timeZone;
 
+timezone.textContent =
+    "LOCAL TIMEZONE • " +
+    detectedTimezone;
 
-/* =====================================================
+
+/* =========================================================
    STATE
-   ===================================================== */
+   ========================================================= */
 
-let christmasStarted = false;
-
-let audioContext = null;
-
-let musicStarted = false;
-
-
-/* =====================================================
-   BER MONTHS COMPLETION
-   ===================================================== */
-
-function completeBerMonths() {
-
-    /*
-     * Add this class to remove the
-     * Ber Months timer from the layout.
-     */
-
-    document.body.classList.add(
-        "ber-complete"
-    );
+let christmasStarted =
+    localStorage.getItem(
+        transitionKey
+    ) === "true";
 
 
-    /*
-     * Replace the reminder.
-     */
+let transitionTimestamp =
+    Number(
+        localStorage.getItem(
+            transitionTimeKey
+        )
+    ) || 0;
+
+
+/* =========================================================
+   REMINDERS
+   ========================================================= */
+
+function showBerReminder() {
 
     reminder.innerHTML = `
 
         <strong>
-            NEW YEAR'S TARGET
+            THE BER MONTHS ARE HERE!
+        </strong>
+
+        <br>
+
+        September 1, 2026 —
+        12:00:00 AM
+
+        <br>
+
+        Christmas season has officially begun.
+
+    `;
+}
+
+
+function showNewYearReminder() {
+
+    reminder.innerHTML = `
+
+        <strong>
+            NEW YEAR'S COUNTDOWN
         </strong>
 
         <br>
@@ -128,19 +172,188 @@ function completeBerMonths() {
 
         <br>
 
-        Keep watching.
-        The New Year countdown continues
-        until midnight.
+        The Ber Months have officially begun.
+        The countdown to 2027 continues.
 
     `;
 }
 
 
-/* =====================================================
-   BER MONTHS COUNTDOWN
-   ===================================================== */
+/* =========================================================
+   RESTORE COMPLETED STATE
+   ========================================================= */
+
+function restoreCompletedState() {
+
+    document.body.classList.add(
+        "ber-complete"
+    );
+
+    document.body.classList.add(
+        "christmas-mode"
+    );
+
+    createSnow();
+
+
+    const elapsed =
+        Date.now() -
+        transitionTimestamp;
+
+
+    const twoMinutes =
+        120000;
+
+
+    if (
+        transitionTimestamp &&
+        elapsed >= twoMinutes
+    ) {
+
+        showNewYearReminder();
+
+    } else {
+
+        showBerReminder();
+
+
+        const remaining =
+            Math.max(
+                0,
+                twoMinutes - elapsed
+            );
+
+
+        setTimeout(
+            showNewYearReminder,
+            remaining
+        );
+    }
+}
+
+
+if (christmasStarted) {
+    restoreCompletedState();
+}
+
+
+/* =========================================================
+   BER MONTHS COMPLETION
+   ========================================================= */
+
+function completeBerMonths() {
+
+    if (christmasStarted) {
+        return;
+    }
+
+
+    christmasStarted = true;
+
+
+    transitionTimestamp =
+        Date.now();
+
+
+    localStorage.setItem(
+        transitionKey,
+        "true"
+    );
+
+    localStorage.setItem(
+        transitionTimeKey,
+        String(
+            transitionTimestamp
+        )
+    );
+
+
+    /* Remove Ber Months timer */
+
+    document.body.classList.add(
+        "ber-complete"
+    );
+
+
+    /* Keep its reminder temporarily */
+
+    showBerReminder();
+
+
+    /* Activate Christmas */
+
+    document.body.classList.add(
+        "christmas-mode"
+    );
+
+
+    createSnow();
+
+
+    /* Popup */
+
+    overlay.classList.add(
+        "active"
+    );
+
+
+    /* Device vibration */
+
+    if (
+        navigator.vibrate
+    ) {
+
+        navigator.vibrate([
+            200,
+            100,
+            200,
+            100,
+            400
+        ]);
+
+    }
+
+
+    /* Close popup */
+
+    setTimeout(
+        () => {
+
+            overlay.classList.remove(
+                "active"
+            );
+
+        },
+        6000
+    );
+
+
+    /*
+        Two minutes after Ber Months
+        completes, change reminder.
+    */
+
+    setTimeout(
+        () => {
+
+            showNewYearReminder();
+
+        },
+        120000
+    );
+}
+
+
+/* =========================================================
+   BER MONTHS TIMER
+   ========================================================= */
 
 function updateBerCountdown() {
+
+    if (christmasStarted) {
+        return;
+    }
+
 
     const remaining =
         berTarget.getTime() -
@@ -155,14 +368,7 @@ function updateBerCountdown() {
         berSeconds.textContent = "00";
 
 
-        if (!christmasStarted) {
-
-            christmasStarted = true;
-
-            completeBerMonths();
-
-            startChristmasMode();
-        }
+        completeBerMonths();
 
         return;
     }
@@ -179,39 +385,42 @@ function updateBerCountdown() {
             totalSeconds / 86400
         );
 
+
     const h =
         Math.floor(
-            (totalSeconds % 86400)
-            / 3600
+            (totalSeconds % 86400) /
+            3600
         );
+
 
     const m =
         Math.floor(
-            (totalSeconds % 3600)
-            / 60
+            (totalSeconds % 3600) /
+            60
         );
+
 
     const s =
         totalSeconds % 60;
 
 
     berDays.textContent =
-        String(d).padStart(2,"0");
+        String(d).padStart(2, "0");
 
     berHours.textContent =
-        String(h).padStart(2,"0");
+        String(h).padStart(2, "0");
 
     berMinutes.textContent =
-        String(m).padStart(2,"0");
+        String(m).padStart(2, "0");
 
     berSeconds.textContent =
-        String(s).padStart(2,"0");
+        String(s).padStart(2, "0");
 }
 
 
-/* =====================================================
-   NEW YEAR COUNTDOWN
-   ===================================================== */
+/* =========================================================
+   NEW YEAR TIMER
+   ========================================================= */
 
 function updateNewYearCountdown() {
 
@@ -242,95 +451,42 @@ function updateNewYearCountdown() {
             totalSeconds / 86400
         );
 
+
     const h =
         Math.floor(
-            (totalSeconds % 86400)
-            / 3600
+            (totalSeconds % 86400) /
+            3600
         );
+
 
     const m =
         Math.floor(
-            (totalSeconds % 3600)
-            / 60
+            (totalSeconds % 3600) /
+            60
         );
+
 
     const s =
         totalSeconds % 60;
 
 
     days.textContent =
-        String(d).padStart(2,"0");
+        String(d).padStart(2, "0");
 
     hours.textContent =
-        String(h).padStart(2,"0");
+        String(h).padStart(2, "0");
 
     minutes.textContent =
-        String(m).padStart(2,"0");
+        String(m).padStart(2, "0");
 
     seconds.textContent =
-        String(s).padStart(2,"0");
+        String(s).padStart(2, "0");
 }
 
 
-/* =====================================================
-   CHRISTMAS MODE
-   ===================================================== */
-
-function startChristmasMode() {
-
-    document.body.classList.add(
-        "christmas-mode"
-    );
-
-
-    christmasOverlay.classList.add(
-        "active"
-    );
-
-
-    createSnow();
-
-
-    /*
-     * Vibrate if the device/browser allows it.
-     */
-
-    if ("vibrate" in navigator) {
-
-        navigator.vibrate([
-            150,
-            80,
-            150,
-            80,
-            300
-        ]);
-    }
-
-
-    /*
-     * Attempt to start music.
-     */
-
-    playChristmasMusic();
-
-
-    /*
-     * Hide popup after six seconds.
-     */
-
-    setTimeout(() => {
-
-        christmasOverlay.classList.remove(
-            "active"
-        );
-
-    },6000);
-}
-
-
-/* =====================================================
+/* =========================================================
    SNOW
-   ===================================================== */
+   ========================================================= */
 
 function createSnow() {
 
@@ -340,19 +496,23 @@ function createSnow() {
         );
 
 
-    if (container.children.length > 0) {
+    if (
+        container.children.length > 0
+    ) {
         return;
     }
 
 
     for (
         let i = 0;
-        i < 70;
+        i < 90;
         i++
     ) {
 
         const snow =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
 
         snow.className =
@@ -360,31 +520,38 @@ function createSnow() {
 
 
         snow.textContent =
-            Math.random() > .5
+            Math.random() > .35
                 ? "❄"
-                : "•";
+                : "✦";
 
 
         snow.style.left =
-            Math.random() * 100 + "%";
+            Math.random() *
+            100 +
+            "%";
 
 
         snow.style.fontSize =
             (
                 8 +
-                Math.random() * 16
-            ) + "px";
+                Math.random() * 18
+            ) +
+            "px";
 
 
         snow.style.animationDuration =
             (
                 5 +
                 Math.random() * 9
-            ) + "s";
+            ) +
+            "s";
 
 
         snow.style.animationDelay =
-            Math.random() * 8 + "s";
+            (
+                Math.random() * 8
+            ) +
+            "s";
 
 
         container.appendChild(
@@ -394,112 +561,21 @@ function createSnow() {
 }
 
 
-/* =====================================================
+/* =========================================================
    CHRISTMAS MUSIC
-   ===================================================== */
+   ========================================================= */
 
-const christmasMelodies = [
-
-    {
-        name: "Jingle Bells",
-
-        notes: [
-            [659.25,0.00,.25],
-            [659.25,0.30,.25],
-            [659.25,0.60,.50],
-
-            [659.25,1.20,.25],
-            [659.25,1.50,.25],
-            [659.25,1.80,.50],
-
-            [659.25,2.40,.25],
-            [783.99,2.70,.25],
-            [523.25,3.00,.35],
-            [587.33,3.40,.35],
-            [659.25,3.80,.60]
-        ]
-    },
+let audioContext = null;
+let musicPlaying = false;
+let musicTimer = null;
+let musicStep = 0;
 
 
-    {
-        name: "O Christmas Tree",
+/* =========================================================
+   AUDIO CONTEXT
+   ========================================================= */
 
-        notes: [
-            [659.25,0.00,.40],
-            [783.99,0.45,.20],
-            [880.00,0.70,.40],
-
-            [880.00,1.15,.40],
-            [783.99,1.60,.25],
-            [659.25,1.90,.50],
-
-            [587.33,2.50,.40],
-            [659.25,2.95,.25],
-            [783.99,3.25,.50],
-
-            [659.25,3.85,.40],
-            [587.33,4.30,.30],
-            [523.25,4.65,.70]
-        ]
-    },
-
-
-    {
-        name: "Deck the Halls",
-
-        notes: [
-            [659.25,0.00,.25],
-            [587.33,0.30,.25],
-            [523.25,0.60,.25],
-            [587.33,0.90,.25],
-            [659.25,1.20,.25],
-            [659.25,1.50,.25],
-            [659.25,1.80,.40],
-
-            [587.33,2.40,.25],
-            [587.33,2.70,.25],
-            [587.33,3.00,.40],
-
-            [659.25,3.60,.25],
-            [783.99,3.90,.25],
-            [880.00,4.20,.40]
-        ]
-    },
-
-
-    {
-        name:
-            "We Wish You a Merry Christmas",
-
-        notes: [
-            [783.99,0.00,.30],
-            [880.00,0.35,.30],
-            [783.99,0.70,.30],
-            [659.25,1.05,.30],
-
-            [587.33,1.40,.30],
-            [659.25,1.75,.30],
-            [783.99,2.10,.50],
-
-            [783.99,2.75,.30],
-            [880.00,3.10,.30],
-            [783.99,3.45,.30],
-            [659.25,3.80,.30],
-
-            [587.33,4.15,.30],
-            [659.25,4.50,.30],
-            [523.25,4.85,.70]
-        ]
-    }
-
-];
-
-
-/* =====================================================
-   AUDIO
-   ===================================================== */
-
-function createAudioContext() {
+function getAudioContext() {
 
     if (!audioContext) {
 
@@ -514,183 +590,383 @@ function createAudioContext() {
 }
 
 
-function playNote(
+/* =========================================================
+   NOTE FREQUENCIES
+   ========================================================= */
+
+const NOTE = {
+
+    C4: 261.63,
+    D4: 293.66,
+    E4: 329.63,
+    F4: 349.23,
+    G4: 392.00,
+    A4: 440.00,
+    B4: 493.88,
+
+    C5: 523.25,
+    D5: 587.33,
+    E5: 659.25,
+    F5: 698.46,
+    G5: 783.99,
+    A5: 880.00,
+    B5: 987.77,
+
+    C6: 1046.50
+};
+
+
+/* =========================================================
+   MELODY
+   ========================================================= */
+
+const melody = [
+
+    ["E5", .30],
+    ["E5", .30],
+    ["E5", .45],
+    [null, .15],
+
+    ["E5", .30],
+    ["E5", .30],
+    ["E5", .45],
+    [null, .15],
+
+    ["E5", .30],
+    ["G5", .30],
+    ["C5", .30],
+    ["D5", .30],
+    ["E5", .60],
+
+    ["F5", .30],
+    ["F5", .30],
+    ["F5", .30],
+    ["F5", .30],
+
+    ["F5", .30],
+    ["E5", .30],
+    ["E5", .30],
+    ["E5", .30],
+
+    ["E5", .30],
+    ["D5", .30],
+    ["D5", .30],
+    ["E5", .30],
+    ["D5", .30],
+    ["G5", .60]
+
+];
+
+
+/* =========================================================
+   BASS
+   ========================================================= */
+
+const bass = [
+
+    "C4",
+    "C4",
+    "G4",
+    "G4",
+
+    "C4",
+    "C4",
+    "F4",
+    "F4",
+
+    "G4",
+    "G4",
+    "C4",
+    "C4"
+
+];
+
+
+/* =========================================================
+   PLAY TONE
+   ========================================================= */
+
+function playTone(
     frequency,
     startTime,
-    duration
+    duration,
+    volume,
+    type = "sine"
 ) {
 
     const ctx =
-        createAudioContext();
+        getAudioContext();
 
 
     const oscillator =
         ctx.createOscillator();
-
 
     const gain =
         ctx.createGain();
 
 
     oscillator.type =
-        "triangle";
+        type;
 
 
-    oscillator.frequency.value =
-        frequency;
-
-
-    gain.gain.setValueAtTime(
-        0,
+    oscillator.frequency.setValueAtTime(
+        frequency,
         startTime
-    );
-
-
-    gain.gain.linearRampToValueAtTime(
-        .09,
-        startTime + .025
-    );
-
-
-    gain.gain.exponentialRampToValueAtTime(
-        .001,
-        startTime + duration
     );
 
 
     oscillator.connect(gain);
 
-    gain.connect(ctx.destination);
+    gain.connect(
+        ctx.destination
+    );
 
 
-    oscillator.start(startTime);
+    gain.gain.setValueAtTime(
+        .0001,
+        startTime
+    );
+
+
+    gain.gain.linearRampToValueAtTime(
+        volume,
+        startTime + .025
+    );
+
+
+    gain.gain.setValueAtTime(
+        volume,
+        startTime +
+        Math.max(
+            .03,
+            duration - .06
+        )
+    );
+
+
+    gain.gain.exponentialRampToValueAtTime(
+        .0001,
+        startTime + duration
+    );
+
+
+    oscillator.start(
+        startTime
+    );
+
 
     oscillator.stop(
         startTime +
         duration +
-        .05
+        .03
     );
 }
 
 
-/* =====================================================
-   SHUFFLE MUSIC
-   ===================================================== */
+/* =========================================================
+   START MUSIC
+   ========================================================= */
 
-function playChristmasMusic() {
+async function startChristmasMusic() {
 
-    if (musicStarted) {
+    const ctx =
+        getAudioContext();
+
+
+    if (
+        ctx.state === "suspended"
+    ) {
+
+        await ctx.resume();
+    }
+
+
+    if (musicPlaying) {
         return;
     }
 
 
-    musicStarted = true;
+    musicPlaying = true;
 
-
-    const ctx =
-        createAudioContext();
-
-
-    if (
-        ctx.state ===
-        "suspended"
-    ) {
-
-        ctx.resume();
-    }
-
-
-    const melody =
-        christmasMelodies[
-            Math.floor(
-                Math.random() *
-                christmasMelodies.length
-            )
-        ];
+    musicStep = 0;
 
 
     musicButton.textContent =
-        "♫ " + melody.name;
+        "♫ Christmas Music — ON";
 
 
-    const start =
-        ctx.currentTime + .1;
-
-
-    melody.notes.forEach(note => {
-
-        playNote(
-            note[0],
-            start + note[1],
-            note[2]
-        );
-
-    });
-
-
-    const finalNote =
-        melody.notes[
-            melody.notes.length - 1
-        ];
-
-
-    const duration =
-        finalNote[1] +
-        finalNote[2];
-
-
-    setTimeout(() => {
-
-        musicStarted = false;
-
-
-        if (
-            document.body
-                .classList
-                .contains(
-                    "christmas-mode"
-                )
-        ) {
-
-            playChristmasMusic();
-        }
-
-    },(duration + .8) * 1000);
+    scheduleMusic();
 }
 
 
-/* =====================================================
+/* =========================================================
+   MUSIC SCHEDULER
+   ========================================================= */
+
+function scheduleMusic() {
+
+    if (!musicPlaying) {
+        return;
+    }
+
+
+    const ctx =
+        getAudioContext();
+
+
+    const now =
+        ctx.currentTime;
+
+
+    const current =
+        melody[
+            musicStep %
+            melody.length
+        ];
+
+
+    const note =
+        current[0];
+
+    const duration =
+        current[1];
+
+
+    if (
+        note !== null
+    ) {
+
+        playTone(
+            NOTE[note],
+            now,
+            duration * .9,
+            .075,
+            "triangle"
+        );
+    }
+
+
+    if (
+        musicStep % 2 === 0
+    ) {
+
+        const bassNote =
+            bass[
+                Math.floor(
+                    musicStep / 2
+                ) %
+                bass.length
+            ];
+
+
+        playTone(
+            NOTE[bassNote],
+            now,
+            .45,
+            .035,
+            "sine"
+        );
+    }
+
+
+    if (
+        musicStep % 2 === 0
+    ) {
+
+        playTone(
+            1100,
+            now,
+            .035,
+            .007,
+            "square"
+        );
+    }
+
+
+    musicStep++;
+
+
+    musicTimer =
+        setTimeout(
+            scheduleMusic,
+            300
+        );
+}
+
+
+/* =========================================================
+   STOP MUSIC
+   ========================================================= */
+
+function stopChristmasMusic() {
+
+    musicPlaying = false;
+
+
+    if (
+        musicTimer !== null
+    ) {
+
+        clearTimeout(
+            musicTimer
+        );
+
+        musicTimer = null;
+    }
+
+
+    musicButton.textContent =
+        "♫ Enable Christmas Music";
+}
+
+
+/* =========================================================
    MUSIC BUTTON
-   ===================================================== */
+   ========================================================= */
 
 musicButton.addEventListener(
     "click",
-    () => {
+    async () => {
 
-        playChristmasMusic();
+        if (musicPlaying) {
 
+            stopChristmasMusic();
+
+        } else {
+
+            try {
+
+                await startChristmasMusic();
+
+            } catch (error) {
+
+                console.error(
+                    "Audio error:",
+                    error
+                );
+
+                musicButton.textContent =
+                    "♫ Audio unavailable";
+            }
+        }
     }
 );
 
 
-/* =====================================================
-   UPDATE LOOP
-   ===================================================== */
+/* =========================================================
+   MAIN LOOP
+   ========================================================= */
 
-function updateAll() {
+function update() {
 
     updateBerCountdown();
 
     updateNewYearCountdown();
 
     requestAnimationFrame(
-        updateAll
+        update
     );
 }
 
 
-/* =====================================================
-   START
-   ===================================================== */
-
-updateAll();
+update();
