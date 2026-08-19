@@ -1,12 +1,13 @@
-/* =========================================================
+/* =====================================================
    RESET
-   ========================================================= */
+   ===================================================== */
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
+
 
 html,
 body {
@@ -15,11 +16,12 @@ body {
 }
 
 
-/* =========================================================
+/* =====================================================
    VARIABLES
-   ========================================================= */
+   ===================================================== */
 
 :root {
+
     --red: #e21b2d;
     --dark-red: #8b0714;
     --green: #16833b;
@@ -36,9 +38,9 @@ body {
 }
 
 
-/* =========================================================
-   DEFAULT THEME
-   ========================================================= */
+/* =====================================================
+   DEFAULT RED + BLACK THEME
+   ===================================================== */
 
 body {
 
@@ -92,33 +94,42 @@ body {
 }
 
 
+/* =====================================================
+   DYNAMIC BACKGROUND
+   ===================================================== */
+
 @keyframes darkRedMotion {
 
     0% {
-        background-position: 0% 50%;
+        background-position:
+            0% 50%;
     }
 
     25% {
-        background-position: 50% 20%;
+        background-position:
+            50% 20%;
     }
 
     50% {
-        background-position: 100% 50%;
+        background-position:
+            100% 50%;
     }
 
     75% {
-        background-position: 65% 90%;
+        background-position:
+            65% 90%;
     }
 
     100% {
-        background-position: 10% 70%;
+        background-position:
+            10% 70%;
     }
 }
 
 
-/* =========================================================
+/* =====================================================
    CHRISTMAS THEME
-   ========================================================= */
+   ===================================================== */
 
 body.christmas-mode {
 
@@ -151,35 +162,43 @@ body.christmas-mode {
     background-size:
         100% 100%;
 
-    animation: none;
+    animation:
+        none;
 }
 
 
-/* =========================================================
-   LAYOUT
-   ========================================================= */
+/* =====================================================
+   MAIN LAYOUT
+   ===================================================== */
 
 .wrapper {
 
-    position: relative;
+    position:
+        relative;
 
-    z-index: 10;
+    z-index:
+        10;
 
-    min-height: 100vh;
+    min-height:
+        100vh;
 
-    display: flex;
+    display:
+        flex;
 
-    justify-content: center;
+    justify-content:
+        center;
 
-    align-items: center;
+    align-items:
+        center;
 
-    padding: 35px 15px;
+    padding:
+        35px 15px;
 }
 
 
-/* =========================================================
+/* =====================================================
    CARD
-   ========================================================= */
+   ===================================================== */
 
 .card {
 
@@ -234,21 +253,26 @@ body.christmas-mode .card {
 }
 
 
-/* =========================================================
+/* =====================================================
    BER SECTION
-   ========================================================= */
+   ===================================================== */
 
 .ber-section {
 
-    max-height: 300px;
+    max-height:
+        300px;
 
-    overflow: hidden;
+    overflow:
+        hidden;
 
-    opacity: 1;
+    opacity:
+        1;
 
-    transform: translateY(0);
+    transform:
+        translateY(0);
 
-    margin-bottom: 5px;
+    margin-bottom:
+        5px;
 
     transition:
         max-height 1s ease,
@@ -260,24 +284,28 @@ body.christmas-mode .card {
 
 body.ber-complete .ber-section {
 
-    max-height: 0;
+    max-height:
+        0;
 
-    opacity: 0;
+    opacity:
+        0;
 
     transform:
         translateY(-25px);
 
-    margin-bottom: -10px;
+    margin-bottom:
+        -10px;
 }
 
 
-/* =========================================================
+/* =====================================================
    BER TITLE
-   ========================================================= */
+   ===================================================== */
 
 .ber-title {
 
-    margin-bottom: 15px;
+    margin-bottom:
+        15px;
 
     color:
         var(--red);
@@ -285,52 +313,68 @@ body.ber-complete .ber-section {
     font-size:
         clamp(13px, 2vw, 17px);
 
-    font-weight: 800;
+    font-weight:
+        800;
 
-    letter-spacing: 3px;
+    letter-spacing:
+        3px;
 
-    text-transform: uppercase;
+    text-transform:
+        uppercase;
 }
 
 
-/* =========================================================
+/* =====================================================
    BER TIMER
-   ========================================================= */
+   ===================================================== */
 
 .ber-timer {
 
-    width: 100%;
+    width:
+        100%;
 
-    max-width: 700px;
+    max-width:
+        700px;
 
-    margin: 0 auto;
+    margin:
+        0 auto;
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
         repeat(4, minmax(0, 1fr));
 
-    gap: 8px;
+    gap:
+        8px;
 }
 
 
 .ber-unit {
 
-    width: 100%;
+    width:
+        100%;
 
-    min-width: 0;
+    min-width:
+        0;
 
-    padding: 12px 5px;
+    padding:
+        12px 5px;
 
-    display: flex;
+    display:
+        flex;
 
-    flex-direction: column;
+    flex-direction:
+        column;
 
-    justify-content: center;
+    justify-content:
+        center;
 
-    align-items: center;
+    align-items:
+        center;
 
-    text-align: center;
+    text-align:
+        center;
 
     background:
         rgba(255,255,255,.045);
@@ -339,7 +383,8 @@ body.ber-complete .ber-section {
         2px solid
         rgba(226,27,45,.45);
 
-    border-radius: 12px;
+    border-radius:
+        12px;
 }
 
 
@@ -355,13 +400,17 @@ body.christmas-mode .ber-unit {
 
 .ber-number {
 
-    display: block;
+    display:
+        block;
 
-    width: 100%;
+    width:
+        100%;
 
-    text-align: center;
+    text-align:
+        center;
 
-    color: #ffffff;
+    color:
+        #ffffff;
 
     font-family:
         "Courier New",
@@ -370,9 +419,11 @@ body.christmas-mode .ber-unit {
     font-size:
         clamp(18px, 4vw, 30px);
 
-    font-weight: 800;
+    font-weight:
+        800;
 
-    line-height: 1;
+    line-height:
+        1;
 
     font-variant-numeric:
         tabular-nums;
@@ -380,57 +431,74 @@ body.christmas-mode .ber-unit {
 
 
 body.christmas-mode .ber-number {
-    color: var(--green);
+    color:
+        var(--green);
 }
 
 
 .ber-label {
 
-    display: block;
+    display:
+        block;
 
-    width: 100%;
+    width:
+        100%;
 
-    margin-top: 7px;
+    margin-top:
+        7px;
 
-    text-align: center;
+    text-align:
+        center;
 
-    color: #ff8b96;
+    color:
+        #ff8b96;
 
-    font-size: 8px;
+    font-size:
+        8px;
 
-    font-weight: 700;
+    font-weight:
+        700;
 
-    letter-spacing: 1.5px;
+    letter-spacing:
+        1.5px;
 
-    line-height: 1;
+    line-height:
+        1;
 
-    text-transform: uppercase;
+    text-transform:
+        uppercase;
 }
 
 
 body.christmas-mode .ber-label {
-    color: var(--red);
+    color:
+        var(--red);
 }
 
 
-/* =========================================================
+/* =====================================================
    YEAR
-   ========================================================= */
+   ===================================================== */
 
 .year {
 
-    margin-top: 28px;
+    margin-top:
+        28px;
 
     font-size:
         clamp(75px, 17vw, 160px);
 
-    font-weight: 900;
+    font-weight:
+        900;
 
-    line-height: .85;
+    line-height:
+        .85;
 
-    letter-spacing: -8px;
+    letter-spacing:
+        -8px;
 
     background:
+
         linear-gradient(
             180deg,
             #ff3348,
@@ -438,16 +506,21 @@ body.christmas-mode .ber-label {
             #7d0714
         );
 
-    -webkit-background-clip: text;
-    background-clip: text;
+    -webkit-background-clip:
+        text;
 
-    color: transparent;
+    background-clip:
+        text;
+
+    color:
+        transparent;
 }
 
 
 body.christmas-mode .year {
 
     background:
+
         linear-gradient(
             180deg,
             #d71920,
@@ -455,98 +528,126 @@ body.christmas-mode .year {
             #16833b
         );
 
-    -webkit-background-clip: text;
-    background-clip: text;
+    -webkit-background-clip:
+        text;
+
+    background-clip:
+        text;
 }
 
 
-/* =========================================================
-   TITLE
-   ========================================================= */
+/* =====================================================
+   TITLES
+   ===================================================== */
 
 .title {
 
-    margin-top: 25px;
+    margin-top:
+        25px;
 
-    color: #ffffff;
+    color:
+        #ffffff;
 
     font-size:
         clamp(27px, 5vw, 50px);
 
-    font-weight: 900;
+    font-weight:
+        900;
 
-    letter-spacing: 5px;
+    letter-spacing:
+        5px;
 
-    text-transform: uppercase;
+    text-transform:
+        uppercase;
 }
 
 
 body.christmas-mode .title {
-    color: var(--red);
+    color:
+        var(--red);
 }
 
 
 .subtitle {
 
-    margin-top: 10px;
+    margin-top:
+        10px;
 
-    color: var(--muted-light);
+    color:
+        var(--muted-light);
 
-    font-size: 14px;
+    font-size:
+        14px;
 }
 
 
 body.christmas-mode .subtitle {
-    color: var(--muted-dark);
+    color:
+        var(--muted-dark);
 }
 
 
-/* =========================================================
+/* =====================================================
    MAIN COUNTDOWN
-   ========================================================= */
+   ===================================================== */
 
 .countdown {
 
-    width: 100%;
+    width:
+        100%;
 
-    max-width: 760px;
+    max-width:
+        760px;
 
-    margin: 38px auto 0;
+    margin:
+        38px auto 0;
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
         repeat(4, minmax(0, 1fr));
 
-    gap: 14px;
+    gap:
+        14px;
 
-    align-items: stretch;
+    align-items:
+        stretch;
 }
 
 
-/* =========================================================
-   COUNTDOWN BOX
-   ========================================================= */
+/* =====================================================
+   TIMER BOX
+   ===================================================== */
 
 .box {
 
-    width: 100%;
+    width:
+        100%;
 
-    min-width: 0;
+    min-width:
+        0;
 
-    min-height: 130px;
+    min-height:
+        130px;
 
-    padding: 20px 8px;
+    padding:
+        20px 8px;
 
-    display: flex;
+    display:
+        flex;
 
-    flex-direction: column;
+    flex-direction:
+        column;
 
-    justify-content: center;
+    justify-content:
+        center;
 
-    align-items: center;
+    align-items:
+        center;
 
-    text-align: center;
+    text-align:
+        center;
 
     background:
         rgba(0,0,0,.52);
@@ -555,16 +656,22 @@ body.christmas-mode .subtitle {
         3px solid
         var(--red);
 
-    border-radius: 18px;
+    border-radius:
+        18px;
 
     box-shadow:
         0 8px 25px
         rgba(0,0,0,.35);
+
+    transition:
+        background 1.5s ease,
+        border-color 1.5s ease;
 }
 
 
 .box:nth-child(even) {
-    border-color: #750711;
+    border-color:
+        #750711;
 }
 
 
@@ -575,34 +682,45 @@ body.christmas-mode .box {
 
     border-color:
         var(--green);
+
+    box-shadow:
+        0 8px 20px
+        rgba(22,131,59,.13);
 }
 
 
 body.christmas-mode .box:nth-child(even) {
-    border-color: var(--red);
+    border-color:
+        var(--red);
 }
 
 
-/* =========================================================
-   MAIN NUMBERS
-   ========================================================= */
+/* =====================================================
+   NUMBERS
+   ===================================================== */
 
 .number {
 
-    display: block;
+    display:
+        block;
 
-    width: 100%;
+    width:
+        100%;
 
-    text-align: center;
+    text-align:
+        center;
 
-    color: #ffffff;
+    color:
+        #ffffff;
 
     font-size:
         clamp(30px, 7vw, 60px);
 
-    font-weight: 900;
+    font-weight:
+        900;
 
-    line-height: 1;
+    line-height:
+        1;
 
     font-variant-numeric:
         tabular-nums;
@@ -610,52 +728,66 @@ body.christmas-mode .box:nth-child(even) {
 
 
 body.christmas-mode .number {
-    color: var(--dark-text);
+    color:
+        var(--dark-text);
 }
 
 
-/* =========================================================
-   MAIN LABELS
-   ========================================================= */
+/* =====================================================
+   LABELS
+   ===================================================== */
 
 .label {
 
-    display: block;
+    display:
+        block;
 
-    width: 100%;
+    width:
+        100%;
 
-    margin-top: 12px;
+    margin-top:
+        12px;
 
-    text-align: center;
+    text-align:
+        center;
 
-    color: #c9c9c9;
+    color:
+        #c9c9c9;
 
-    font-size: 10px;
+    font-size:
+        10px;
 
-    font-weight: 700;
+    font-weight:
+        700;
 
-    line-height: 1;
+    line-height:
+        1;
 
-    letter-spacing: 2px;
+    letter-spacing:
+        2px;
 
-    text-transform: uppercase;
+    text-transform:
+        uppercase;
 }
 
 
 body.christmas-mode .label {
-    color: var(--muted-dark);
+    color:
+        var(--muted-dark);
 }
 
 
-/* =========================================================
+/* =====================================================
    REMINDER
-   ========================================================= */
+   ===================================================== */
 
 .info {
 
-    margin-top: 30px;
+    margin-top:
+        30px;
 
-    padding: 17px 20px;
+    padding:
+        17px 20px;
 
     background:
         rgba(226,27,45,.09);
@@ -668,13 +800,22 @@ body.christmas-mode .label {
         5px solid
         #760711;
 
-    border-radius: 10px;
+    border-radius:
+        10px;
 
-    color: #dedede;
+    color:
+        #dedede;
 
-    font-size: 13px;
+    font-size:
+        13px;
 
-    line-height: 1.7;
+    line-height:
+        1.7;
+
+    transition:
+        background 1.5s ease,
+        color 1.5s ease,
+        border-color 1.5s ease;
 }
 
 
@@ -690,65 +831,85 @@ body.christmas-mode .info {
     border-right-color:
         var(--green);
 
-    color: #536053;
+    color:
+        #536053;
 }
 
 
-/* =========================================================
+/* =====================================================
    TIMEZONE
-   ========================================================= */
+   ===================================================== */
 
 .timezone {
 
-    margin-top: 17px;
+    margin-top:
+        17px;
 
-    color: #9f9f9f;
+    color:
+        #9f9f9f;
 
-    font-size: 11px;
+    font-size:
+        11px;
 
-    letter-spacing: 1px;
+    letter-spacing:
+        1px;
 }
 
 
 body.christmas-mode .timezone {
-    color: #708070;
+    color:
+        #708070;
 }
 
 
-/* =========================================================
+/* =====================================================
    MUSIC BUTTON
-   ========================================================= */
+   ===================================================== */
 
 .music-button {
 
-    margin-top: 20px;
+    margin-top:
+        20px;
 
-    padding: 11px 20px;
+    padding:
+        11px 20px;
 
     border:
         2px solid
         var(--red);
 
-    border-radius: 999px;
+    border-radius:
+        999px;
 
-    background: #080808;
+    background:
+        #080808;
 
-    color: #ffffff;
+    color:
+        #ffffff;
 
-    cursor: pointer;
+    cursor:
+        pointer;
 
-    font-size: 12px;
+    font-size:
+        12px;
 
-    font-weight: 700;
+    font-weight:
+        700;
 
     transition:
         transform .2s ease,
-        background .3s ease;
+        background .3s ease,
+        border-color .3s ease;
 }
 
 
 .music-button:hover {
-    transform: translateY(-2px);
+
+    transform:
+        translateY(-2px);
+
+    background:
+        #25070a;
 }
 
 
@@ -757,69 +918,92 @@ body.christmas-mode .music-button {
     border-color:
         var(--green);
 
-    background: #ffffff;
+    background:
+        #ffffff;
 
-    color: var(--green);
+    color:
+        var(--green);
 }
 
 
-/* =========================================================
+/* =====================================================
    CHRISTMAS LAYER
-   HIDDEN UNTIL CHRISTMAS MODE
-   ========================================================= */
+   ===================================================== */
 
 .christmas-layer {
 
-    position: fixed;
+    position:
+        fixed;
 
-    inset: 0;
+    inset:
+        0;
 
-    z-index: 2;
+    z-index:
+        2;
 
-    pointer-events: none;
+    pointer-events:
+        none;
 
-    opacity: 0;
+    opacity:
+        0;
 
-    visibility: hidden;
+    visibility:
+        hidden;
 
-    transition: opacity 1.2s ease;
+    transition:
+        opacity 1.2s ease;
 }
 
 
 body.christmas-mode .christmas-layer {
 
-    opacity: 1;
+    opacity:
+        1;
 
-    visibility: visible;
+    visibility:
+        visible;
 }
 
 
-/* =========================================================
+/* =====================================================
    LIGHTS
-   ========================================================= */
+   ===================================================== */
 
 .lights {
 
-    position: absolute;
+    position:
+        absolute;
 
-    top: 0;
-    left: 0;
-    right: 0;
+    top:
+        0;
 
-    height: 48px;
+    left:
+        0;
 
-    display: flex;
+    right:
+        0;
 
-    justify-content: space-around;
+    height:
+        48px;
 
-    align-items: center;
+    display:
+        flex;
+
+    justify-content:
+        space-around;
+
+    align-items:
+        center;
 }
 
 
 .bulb {
 
-    width: 15px;
-    height: 21px;
+    width:
+        15px;
+
+    height:
+        21px;
 
     border-radius:
         50% 50% 45% 45%;
@@ -834,68 +1018,89 @@ body.christmas-mode .christmas-layer {
 
 .bulb:nth-child(3n) {
 
-    background: #d71920;
+    background:
+        #d71920;
 
     box-shadow:
-        0 0 15px #d71920;
+        0 0 15px
+        #d71920;
 }
 
 
 .bulb:nth-child(3n + 1) {
 
-    background: #2fbf5b;
+    background:
+        #2fbf5b;
 
     box-shadow:
-        0 0 15px #2fbf5b;
+        0 0 15px
+        #2fbf5b;
 }
 
 
 .bulb:nth-child(3n + 2) {
 
-    background: #f5c542;
+    background:
+        #f5c542;
 
     box-shadow:
-        0 0 15px #f5c542;
+        0 0 15px
+        #f5c542;
 }
 
 
 @keyframes bulbGlow {
 
     from {
-        transform: scale(.8);
-        filter: brightness(.75);
+
+        transform:
+            scale(.8);
+
+        filter:
+            brightness(.75);
     }
 
     to {
-        transform: scale(1.15);
-        filter: brightness(1.5);
+
+        transform:
+            scale(1.15);
+
+        filter:
+            brightness(1.5);
     }
 }
 
 
-/* =========================================================
+/* =====================================================
    SNOW
-   ========================================================= */
+   ===================================================== */
 
 .snow-container {
 
-    position: absolute;
+    position:
+        absolute;
 
-    inset: 0;
+    inset:
+        0;
 
-    overflow: hidden;
+    overflow:
+        hidden;
 }
 
 
 .snowflake {
 
-    position: absolute;
+    position:
+        absolute;
 
-    top: -30px;
+    top:
+        -30px;
 
-    color: white;
+    color:
+        white;
 
-    opacity: .85;
+    opacity:
+        .85;
 
     animation:
         snowfall
@@ -907,12 +1112,14 @@ body.christmas-mode .christmas-layer {
 @keyframes snowfall {
 
     from {
+
         transform:
             translateY(-30px)
             rotate(0deg);
     }
 
     to {
+
         transform:
             translateY(110vh)
             rotate(360deg);
@@ -920,15 +1127,17 @@ body.christmas-mode .christmas-layer {
 }
 
 
-/* =========================================================
+/* =====================================================
    DECORATIONS
-   ========================================================= */
+   ===================================================== */
 
 .decor {
 
-    position: absolute;
+    position:
+        absolute;
 
-    bottom: 15px;
+    bottom:
+        15px;
 
     font-size:
         clamp(45px, 7vw, 85px);
@@ -942,24 +1151,28 @@ body.christmas-mode .christmas-layer {
 
 
 .decor-left {
-    left: 15px;
+    left:
+        15px;
 }
 
 
 .decor-right {
-    right: 15px;
+    right:
+        15px;
 }
 
 
 @keyframes floatDecoration {
 
     from {
+
         transform:
             translateY(0)
             rotate(-3deg);
     }
 
     to {
+
         transform:
             translateY(-12px)
             rotate(3deg);
@@ -967,44 +1180,57 @@ body.christmas-mode .christmas-layer {
 }
 
 
-/* =========================================================
+/* =====================================================
    CHRISTMAS POPUP
-   ========================================================= */
+   ===================================================== */
 
 .christmas-overlay {
 
-    position: fixed;
+    position:
+        fixed;
 
-    inset: 0;
+    inset:
+        0;
 
-    z-index: 100;
+    z-index:
+        100;
 
-    display: flex;
+    display:
+        flex;
 
-    justify-content: center;
+    justify-content:
+        center;
 
-    align-items: center;
+    align-items:
+        center;
 
-    padding: 20px;
+    padding:
+        20px;
 
     background:
         rgba(180,0,20,.45);
 
-    opacity: 0;
+    opacity:
+        0;
 
-    visibility: hidden;
+    visibility:
+        hidden;
 
-    pointer-events: none;
+    pointer-events:
+        none;
 
-    transition: opacity .8s ease;
+    transition:
+        opacity .8s ease;
 }
 
 
 .christmas-overlay.active {
 
-    opacity: 1;
+    opacity:
+        1;
 
-    visibility: visible;
+    visibility:
+        visible;
 }
 
 
@@ -1013,25 +1239,31 @@ body.christmas-mode .christmas-layer {
     width:
         min(800px, 95%);
 
-    padding: 50px 30px;
+    padding:
+        50px 30px;
 
-    text-align: center;
+    text-align:
+        center;
 
-    background: #fffaf0;
+    background:
+        #fffaf0;
 
     border:
         8px solid
         #d71920;
 
-    border-radius: 28px;
+    border-radius:
+        28px;
 
     box-shadow:
         0 30px 80px
         rgba(120,20,20,.35);
 
-    transform: scale(.5);
+    transform:
+        scale(.5);
 
-    opacity: 0;
+    opacity:
+        0;
 }
 
 
@@ -1048,27 +1280,33 @@ body.christmas-mode .christmas-layer {
 @keyframes christmasPop {
 
     0% {
+
         transform:
             scale(.5)
             rotate(-3deg);
 
-        opacity: 0;
+        opacity:
+            0;
     }
 
     60% {
+
         transform:
             scale(1.08)
             rotate(1deg);
 
-        opacity: 1;
+        opacity:
+            1;
     }
 
     100% {
+
         transform:
             scale(1)
             rotate(0);
 
-        opacity: 1;
+        opacity:
+            1;
     }
 }
 
@@ -1078,68 +1316,84 @@ body.christmas-mode .christmas-layer {
     font-size:
         clamp(50px, 10vw, 100px);
 
-    margin-bottom: 15px;
+    margin-bottom:
+        15px;
 }
 
 
 .christmas-heading {
 
-    color: #d71920;
+    color:
+        #d71920;
 
     font-size:
         clamp(34px, 8vw, 75px);
 
-    font-weight: 900;
+    font-weight:
+        900;
 }
 
 
 .christmas-message {
 
-    margin-top: 15px;
+    margin-top:
+        15px;
 
-    color: #202020;
+    color:
+        #202020;
 
     font-size:
         clamp(15px, 3vw, 21px);
 
-    font-weight: 700;
+    font-weight:
+        700;
 
-    line-height: 1.5;
+    line-height:
+        1.5;
 }
 
 
-/* =========================================================
+/* =====================================================
    MOBILE
-   ========================================================= */
+   ===================================================== */
 
 @media (max-width: 600px) {
 
     .card {
-        padding: 30px 12px;
+        padding:
+            30px 12px;
     }
 
     .ber-timer {
-        gap: 5px;
+        gap:
+            5px;
     }
 
     .countdown {
-        gap: 6px;
+        gap:
+            6px;
     }
 
     .box {
-        min-height: 110px;
-        padding: 16px 4px;
+        min-height:
+            110px;
+
+        padding:
+            16px 4px;
     }
 
     .title {
-        letter-spacing: 3px;
+        letter-spacing:
+            3px;
     }
 
     .year {
-        letter-spacing: -5px;
+        letter-spacing:
+            -5px;
     }
 
     .decor {
-        font-size: 45px;
+        font-size:
+            45px;
     }
 }
